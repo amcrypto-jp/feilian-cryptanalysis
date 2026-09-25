@@ -1,0 +1,4 @@
+CryptHash_AlgorithmInstance.c: In function ‘CryptHash’:
+CryptHash_AlgorithmInstance.c:362:30: warning: conversion to ‘unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  362 |         unsigned int shift = 8 - (digest_len_bits % 8);
+      |                              ^

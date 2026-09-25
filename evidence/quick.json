@@ -1,0 +1,83 @@
+{
+  "python": "3.14.4",
+  "ordinary_examples": [
+    {
+      "bits": 512,
+      "message": "empty",
+      "digests": {
+        "c": "d58edac808ef7fa652c3e9f836e1f06754c8252c9c41892b12e3ef153c43630b9620a8bdfbc9d69e7db49c734501abe67aec19d3478cfa527fbca5cbe9f2dbe1",
+        "chapter2": "cc0f0ee4b7a2eeb67b8c1cf019c27e61b2c0da8826d3d8423ac37cc4ec249bd4d1fbe0eac01eb7f1fb0ab9931c311814602a898dd58991f87abda34c4e042f08"
+      }
+    },
+    {
+      "bits": 512,
+      "message": "abc",
+      "digests": {
+        "c": "fc7320c565f60ec6a6ea26585f7c7d1f50931119a1d1fb6ca06a71bed9bce0947e22171373e48e0c9bb1ef36808ef3e5fa56c50ff5838213b54a0750c6ae1270",
+        "chapter2": "5d81cd70eca84736e1e2c2090b2aec9b54addb9320a732500047ba266e84da0615d2bc6e42fc1e0bf21ff03d231c1ccdca7ba048866f83201ef3198adcd5dcb9"
+      }
+    },
+    {
+      "bits": 512,
+      "message": "a_times_129",
+      "digests": {
+        "c": "a2189955d155788ce69ab2a6db9b5a943eff5d5924876f96ba46d3944947238e3f0f29ea4c15bddda8dd238876b0d6933d6f17a7eb6e166b5e4afb38519b803a",
+        "chapter2": "79e134d4ee5d4841743e1e3158023f59deb5b7d2f57032f74d53f95ae1b5a1828baf1062a88a36e77462583cad9e676d2f1a531e04d7d29a2f9344bacf9d1265"
+      }
+    },
+    {
+      "bits": 768,
+      "message": "empty",
+      "digests": {
+        "c": "d429ca84c4065bfd308cdbcdc96f1f062ad78699eb8f2e3f8a212b0679c079ae50e0c340283f0d26e1da50bb238c5a5d143c2d6aa02cd4632613892ff2852fa4117be40989f0da3fb749f58feaacb78d20b6d259be38f94b939de91a71b7c5ef",
+        "chapter2": "adba2c4e42f481f5a0ca4715dd1a5450f86a9b7c5ccab4077cabcac79a0d2070743f07f895c1b061d33e1714bf415fbd562ff0dd3d968dac6442c0966dcdca9429cae859f55f7dd25e5be231f85638e8b578055be4d8bd4f31024a748ec4b55b"
+      }
+    },
+    {
+      "bits": 768,
+      "message": "abc",
+      "digests": {
+        "c": "ea0a78e8fd68db09af5ad1d5755311e6073e2742f9c9f79fcb9966dc869e1454bac2495ca9bfe8ea2f331638ccd98a3f6ecdb42b952889b0ec054a26e934fe94f46b8b5fd6c4bb34b5bfb869028e76f78bbc0c99f1c276becb1adc2739a5abe1",
+        "chapter2": "a6a1917402df7ea913f093cec01f208f1f2fe99cd2ac2cb0f28343887eff55bb5302bedccb835d9b9cc5747a572d7d936907372eb584bf6d763894f623ef009c64eadd85850d281af9db18e9ad744ac5441af84f79fb80ace34c240a6e347a29"
+      }
+    },
+    {
+      "bits": 768,
+      "message": "a_times_129",
+      "digests": {
+        "c": "5fc94695955a87e9defaaf83a7460733ded961a12b7c55073af1611c8f524339af4000edb802c44332b24a4187525040e12f4e530c633797c2283313a832445cb62f926c28f0e45f7ccb8b9c2278096446141c07e46f78a014ab284f37e6d4fd",
+        "chapter2": "d6a4174f40b0bb6d455e3bee4870821ab8f6beb605ca6ae6671172f19cb462e14895424f49ec5bd645c5a182d18ce7afde3f3d7b877c4b214da0b49ba65afad3c8dc34fd251d5e19793e98b7696e56346519f0d516d2576fd77fc839cdb25599"
+      }
+    },
+    {
+      "bits": 1024,
+      "message": "empty",
+      "digests": {
+        "c": "050d49c1ec846087e39b3d33df18b36e657aedace23e834994e5020951a1b8f12fe1aa19b4d0963cacb763a62591504da946bf965c02d2690f4de4fa1e50d3c39d47ad5a8f5022809c47dc39c4be67a1f7a83b026e2677b02f33850667420a0f7f226089911b677471fa791f90b0e6fe750e5365679ddf6b6081b4174663d9b9",
+        "chapter2": "6f1e32db3b38c0d31bf6c0b4039af8d359d0a271844747c529fcfeef6d67c2a4c7204f119032beedead4d938c69985b42d99d1c5a0568aa88a95687a0d271c7393d6c512461c479bda60e670320871bbdd9e12a6007562419d061ea5c00a454b7cc89e0a4c8143e966a93000a27741d277ae4e4603cca4b8b7cc9d8f1a83be28"
+      }
+    },
+    {
+      "bits": 1024,
+      "message": "abc",
+      "digests": {
+        "c": "0507e4b1ef75d025dfa303ea0a8e2c47f9c7c5503dc12be4d38615f0b1e1ed2b0ec6527ec29778a436be43cd599500fdfe2718a07ba9ca85c94271df47351109dc73a8ec672ba113296b155e56052dd639a0e0a636afea4888db3739e2f282ccda0d93dfbeefde73902c89d42803b6cb7944717688ebc3b2ad2955c31ee6c681",
+        "chapter2": "8b27103d98eabd06b36a8a1d2148d8e61dc2637dd343bb6fe754c037e08841fe0fdb6fd6b293ba1c9ac13fcfb20704d428a8cb202299d3fbe53c6f95f12dbee7ce979019f9de60b4123730e63e89e2cc36e9ea3913ff1d674ace3b75fa452b46b1ebf1f834de7f98e9822c3d54420edb8f74fcceab5ae500654830f9ed0891be"
+      }
+    },
+    {
+      "bits": 1024,
+      "message": "a_times_129",
+      "digests": {
+        "c": "e3383d3260ea32ed8fe316f8b27cd6bea25969c43aacdc01360c94861cd190ff95a82f04ebf95e9519eef7c969bb0f0bee439de8851ce6bfbe21ba160f55884daf4263785f6b6d1e7713350145ba5fcdeb63e5e2e376161b5dfa8ef11f09e285ab8ebb5cb6de1b60517922e7d3ffabf2537a269f70f25f5a117484183bc76ee5",
+        "chapter2": "55e868b2925434b3ccf7cb3bc194a675d947c0d5eea5b8725f94268f65eb10bd64c31b50252c05dfbdfceaf9d07298201b4a9ae8f7680ad4db98f133cd597c55c98dae09aaff26df5145a0c9c72314500bff73040455bac80a6df84ab4bfd8f76819755552f7214a725cb26d4b3f18c72d45d42ddf1747064f9e968ea5170a99"
+      }
+    }
+  ],
+  "scope": "Canonical examples and component checks; no security-complexity claim",
+  "components": {
+    "subcolumn_inverse_pass": 10000,
+    "sigma0_rank": 64,
+    "sigma1_rank": 64
+  }
+}

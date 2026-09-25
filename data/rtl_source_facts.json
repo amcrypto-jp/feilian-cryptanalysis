@@ -1,0 +1,313 @@
+{
+  "scope": "Static source facts; no RTL simulation or fault injection",
+  "architectures": {
+    "FEILIAN_1SC": {
+      "core.sv": [
+        {
+          "line": 16,
+          "text": "input  logic [7:0]             valid_bytes,"
+        },
+        {
+          "line": 55,
+          "text": "input logic [7:0]            valid_bytes,"
+        },
+        {
+          "line": 75,
+          "text": "input logic [7:0] valid_bytes,"
+        },
+        {
+          "line": 79,
+          "text": "block_bits_to_add = {valid_bytes, 3'b000};"
+        },
+        {
+          "line": 81,
+          "text": "block_bits_to_add = BLOCK_BITS_COUNT_WIDTH'(BLOCK_BITS);"
+        },
+        {
+          "line": 93,
+          "text": "make_domain[2*WORD_BITS +: WORD_BITS] = hash_bits[63:0];"
+        },
+        {
+          "line": 94,
+          "text": "make_domain[3*WORD_BITS +: WORD_BITS] = hash_bits[127:64];"
+        },
+        {
+          "line": 111,
+          "text": "digest[(WORDS - 1 - i)*WORD_BITS +: WORD_BITS] ="
+        },
+        {
+          "line": 132,
+          "text": "assign digest       = format_digest(h_reg);"
+        },
+        {
+          "line": 135,
+          "text": "assign cf_domain    = make_domain(last, hashed_bits_reg);"
+        },
+        {
+          "line": 157,
+          "text": "hashed_bits_nxt = hashed_bits_reg + {{(128-BLOCK_BITS_COUNT_WIDTH){1'b0}}, bits_added};"
+        }
+      ],
+      "feilian_pkg.sv": [
+        {
+          "line": 10,
+          "text": "localparam int DIGEST_BITS = 1024;"
+        },
+        {
+          "line": 49,
+          "text": "localparam word_t VERSION = 64'h400;"
+        }
+      ],
+      "feilian.sv": [
+        {
+          "line": 8,
+          "text": "parameter int DIGEST_BITS = feilian_pkg::DIGEST_BITS,"
+        },
+        {
+          "line": 40,
+          "text": "core u_core ("
+        },
+        {
+          "line": 62,
+          "text": "valid_bytes_nxt = wr_data[7:0];"
+        },
+        {
+          "line": 123,
+          "text": "((rd_addr >= ADDR_DIGEST_BASE) && (rd_addr < ADDR_DIGEST_BASE + WORDS)): begin"
+        }
+      ]
+    },
+    "FEILIAN_2SC": {
+      "core.sv": [
+        {
+          "line": 16,
+          "text": "input  logic [7:0]             valid_bytes,"
+        },
+        {
+          "line": 55,
+          "text": "input logic [7:0]            valid_bytes,"
+        },
+        {
+          "line": 75,
+          "text": "input logic [7:0] valid_bytes,"
+        },
+        {
+          "line": 79,
+          "text": "block_bits_to_add = {valid_bytes, 3'b000};"
+        },
+        {
+          "line": 81,
+          "text": "block_bits_to_add = BLOCK_BITS_COUNT_WIDTH'(BLOCK_BITS);"
+        },
+        {
+          "line": 93,
+          "text": "make_domain[2*WORD_BITS +: WORD_BITS] = hash_bits[127:64];"
+        },
+        {
+          "line": 94,
+          "text": "make_domain[3*WORD_BITS +: WORD_BITS] = hash_bits[63:0];"
+        },
+        {
+          "line": 111,
+          "text": "digest[(WORDS - 1 - i)*WORD_BITS +: WORD_BITS] ="
+        },
+        {
+          "line": 124,
+          "text": "assign hashed_bits_updated = hashed_bits_reg + {{(128-BLOCK_BITS_COUNT_WIDTH){1'b0}}, bits_added_at_start};"
+        },
+        {
+          "line": 138,
+          "text": "assign digest       = format_digest(h_reg);"
+        },
+        {
+          "line": 141,
+          "text": "assign cf_domain    = make_domain(last, hashed_bits_updated);"
+        },
+        {
+          "line": 163,
+          "text": "hashed_bits_nxt = hashed_bits_reg + {{(128-BLOCK_BITS_COUNT_WIDTH){1'b0}}, bits_added};"
+        }
+      ],
+      "feilian_pkg.sv": [
+        {
+          "line": 10,
+          "text": "localparam int DIGEST_BITS = 1024;"
+        },
+        {
+          "line": 49,
+          "text": "localparam word_t VERSION = 64'h400;"
+        }
+      ],
+      "feilian.sv": [
+        {
+          "line": 8,
+          "text": "parameter int DIGEST_BITS = feilian_pkg::DIGEST_BITS,"
+        },
+        {
+          "line": 40,
+          "text": "core u_core ("
+        },
+        {
+          "line": 62,
+          "text": "valid_bytes_nxt = wr_data[7:0];"
+        },
+        {
+          "line": 123,
+          "text": "((rd_addr >= ADDR_DIGEST_BASE) && (rd_addr < ADDR_DIGEST_BASE + WORDS)): begin"
+        }
+      ]
+    },
+    "FEILIAN_4SC": {
+      "core.sv": [
+        {
+          "line": 16,
+          "text": "input  logic [7:0]             valid_bytes,"
+        },
+        {
+          "line": 55,
+          "text": "input logic [7:0]            valid_bytes,"
+        },
+        {
+          "line": 75,
+          "text": "input logic [7:0] valid_bytes,"
+        },
+        {
+          "line": 79,
+          "text": "block_bits_to_add = {valid_bytes, 3'b000};"
+        },
+        {
+          "line": 81,
+          "text": "block_bits_to_add = BLOCK_BITS_COUNT_WIDTH'(BLOCK_BITS);"
+        },
+        {
+          "line": 93,
+          "text": "make_domain[2*WORD_BITS +: WORD_BITS] = hash_bits[63:0];"
+        },
+        {
+          "line": 94,
+          "text": "make_domain[3*WORD_BITS +: WORD_BITS] = hash_bits[127:64];"
+        },
+        {
+          "line": 111,
+          "text": "digest[(WORDS - 1 - i)*WORD_BITS +: WORD_BITS] ="
+        },
+        {
+          "line": 132,
+          "text": "assign digest       = format_digest(h_reg);"
+        },
+        {
+          "line": 135,
+          "text": "assign cf_domain    = make_domain(last, hashed_bits_reg);"
+        },
+        {
+          "line": 157,
+          "text": "hashed_bits_nxt = hashed_bits_reg + {{(128-BLOCK_BITS_COUNT_WIDTH){1'b0}}, bits_added};"
+        }
+      ],
+      "feilian_pkg.sv": [
+        {
+          "line": 10,
+          "text": "localparam int DIGEST_BITS = 1024;"
+        },
+        {
+          "line": 49,
+          "text": "localparam word_t VERSION = 64'h400;"
+        }
+      ],
+      "feilian.sv": [
+        {
+          "line": 8,
+          "text": "parameter int DIGEST_BITS = feilian_pkg::DIGEST_BITS,"
+        },
+        {
+          "line": 40,
+          "text": "core u_core ("
+        },
+        {
+          "line": 62,
+          "text": "valid_bytes_nxt = wr_data[7:0];"
+        },
+        {
+          "line": 123,
+          "text": "((rd_addr >= ADDR_DIGEST_BASE) && (rd_addr < ADDR_DIGEST_BASE + WORDS)): begin"
+        }
+      ]
+    },
+    "FEILIAN_8SC": {
+      "core.sv": [
+        {
+          "line": 16,
+          "text": "input  logic [7:0]             valid_bytes_i,"
+        },
+        {
+          "line": 57,
+          "text": "input logic [7:0]            valid_bytes,"
+        },
+        {
+          "line": 77,
+          "text": "input logic [7:0] valid_bytes,"
+        },
+        {
+          "line": 81,
+          "text": "block_bits_to_add = {valid_bytes, 3'b000};"
+        },
+        {
+          "line": 83,
+          "text": "block_bits_to_add = BLOCK_BITS_COUNT_WIDTH'(BLOCK_BITS);"
+        },
+        {
+          "line": 95,
+          "text": "make_domain[2*WORD_BITS +: WORD_BITS] = hash_bits[63:0];"
+        },
+        {
+          "line": 96,
+          "text": "make_domain[3*WORD_BITS +: WORD_BITS] = hash_bits[127:64];"
+        },
+        {
+          "line": 113,
+          "text": "digest[(WORDS - 1 - i)*WORD_BITS +: WORD_BITS] ="
+        },
+        {
+          "line": 134,
+          "text": "assign digest_o       = digest_reg;"
+        },
+        {
+          "line": 137,
+          "text": "assign cf_domain      = make_domain(last_i, hashed_bits_reg);"
+        },
+        {
+          "line": 160,
+          "text": "hashed_bits_nxt = hashed_bits_reg + {{(128-BLOCK_BITS_COUNT_WIDTH){1'b0}}, bits_added};"
+        }
+      ],
+      "feilian_pkg.sv": [
+        {
+          "line": 10,
+          "text": "localparam int DIGEST_BITS = 1024;"
+        },
+        {
+          "line": 49,
+          "text": "localparam word_t VERSION = 64'h400;"
+        }
+      ],
+      "feilian.sv": [
+        {
+          "line": 8,
+          "text": "parameter int DIGEST_BITS = feilian_pkg::DIGEST_BITS,"
+        },
+        {
+          "line": 40,
+          "text": "core u_core ("
+        },
+        {
+          "line": 62,
+          "text": "valid_bytes_nxt = wr_data[7:0];"
+        },
+        {
+          "line": 123,
+          "text": "((rd_addr >= ADDR_DIGEST_BASE) && (rd_addr < ADDR_DIGEST_BASE + WORDS)): begin"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "Algorithm specifications/Specification.pdf": {
+    "sha256": "8e3a9a109f3188ab57cbd0156c243f80a6453051cf98006dfef11d66bdeb5fa8",
+    "bytes": 642596
+  },
+  "Basic information/Basic Algorithm Information.pdf": {
+    "sha256": "25d376bc88d9d954322af180dde9fd9fbe5c58e26721a19eedca71e6ca2a43e1",
+    "bytes": 2672892
+  },
+  "Implementations/Additional_Implementation/FEILIAN_1SC/compression.sv": {
+    "sha256": "93ca800047ba87ad0cae5b8dea03ff5127e6944d4d43ce9e9121d96144caaf07",
+    "bytes": 4286
+  },
+  "Implementations/Additional_Implementation/FEILIAN_1SC/core.sv": {
+    "sha256": "4f48f341c0c0c44954344fa979c885f53422e66303247535936bf983311e16fd",
+    "bytes": 6491
+  },
+  "Implementations/Additional_Implementation/FEILIAN_1SC/feilian.f": {
+    "sha256": "891a09a6955f18ba0b48f1fcba5aa15cc5a39666b15126ce4cc1bacef5137691",
+    "bytes": 71
+  },
+  "Implementations/Additional_Implementation/FEILIAN_1SC/feilian.sv": {
+    "sha256": "088e6728e18a00f70f50f0237bdbaccb665e0b794041d8dbb5861e705d254785",
+    "bytes": 4395
+  },
+  "Implementations/Additional_Implementation/FEILIAN_1SC/feilian_pkg.sv": {
+    "sha256": "4d0f11b8528e3e696ea50f4c4fdafa5725cd034a815c55e01750d719bf2d25fb",
+    "bytes": 2377
+  },
+  "Implementations/Additional_Implementation/FEILIAN_1SC/round.sv": {
+    "sha256": "c6ca49288dfc6d1915feb5ba3c1544552de8c51d5c78395983d569a3da620e45",
+    "bytes": 10512
+  },
+  "Implementations/Additional_Implementation/FEILIAN_1SC/subcolumn.sv": {
+    "sha256": "5d0a80dea1ae2466c4a0acc43cc6cbb1644f41b0d30ebcb08a3b7af85b2afd61",
+    "bytes": 1475
+  },
+  "Implementations/Additional_Implementation/FEILIAN_2SC/compression.sv": {
+    "sha256": "31882d8b4c629918cb77de6a0e944803139ef059e69c01c324a69d82092844d1",
+    "bytes": 4204
+  },
+  "Implementations/Additional_Implementation/FEILIAN_2SC/core.sv": {
+    "sha256": "3dfd52e0c5765ae457106e94387e6a50da3dd7cc630d16d7cea32a61b81e8091",
+    "bytes": 6800
+  },
+  "Implementations/Additional_Implementation/FEILIAN_2SC/feilian.f": {
+    "sha256": "891a09a6955f18ba0b48f1fcba5aa15cc5a39666b15126ce4cc1bacef5137691",
+    "bytes": 71
+  },
+  "Implementations/Additional_Implementation/FEILIAN_2SC/feilian.sv": {
+    "sha256": "088e6728e18a00f70f50f0237bdbaccb665e0b794041d8dbb5861e705d254785",
+    "bytes": 4395
+  },
+  "Implementations/Additional_Implementation/FEILIAN_2SC/feilian_pkg.sv": {
+    "sha256": "4d0f11b8528e3e696ea50f4c4fdafa5725cd034a815c55e01750d719bf2d25fb",
+    "bytes": 2377
+  },
+  "Implementations/Additional_Implementation/FEILIAN_2SC/round.sv": {
+    "sha256": "6fbfffea2235764ba0fcd9e02cfc1c0b883d37558eb448b0cd42ac2c377f492d",
+    "bytes": 7991
+  },
+  "Implementations/Additional_Implementation/FEILIAN_2SC/subcolumn.sv": {
+    "sha256": "5d0a80dea1ae2466c4a0acc43cc6cbb1644f41b0d30ebcb08a3b7af85b2afd61",
+    "bytes": 1475
+  },
+  "Implementations/Additional_Implementation/FEILIAN_4SC/compression.sv": {
+    "sha256": "4bc6fe12718f1881c6526aa9079169384438703f84846eacb4b9b529a988800b",
+    "bytes": 4312
+  },
+  "Implementations/Additional_Implementation/FEILIAN_4SC/core.sv": {
+    "sha256": "4f48f341c0c0c44954344fa979c885f53422e66303247535936bf983311e16fd",
+    "bytes": 6491
+  },
+  "Implementations/Additional_Implementation/FEILIAN_4SC/feilian.f": {
+    "sha256": "891a09a6955f18ba0b48f1fcba5aa15cc5a39666b15126ce4cc1bacef5137691",
+    "bytes": 71
+  },
+  "Implementations/Additional_Implementation/FEILIAN_4SC/feilian.sv": {
+    "sha256": "088e6728e18a00f70f50f0237bdbaccb665e0b794041d8dbb5861e705d254785",
+    "bytes": 4395
+  },
+  "Implementations/Additional_Implementation/FEILIAN_4SC/feilian_pkg.sv": {
+    "sha256": "4d0f11b8528e3e696ea50f4c4fdafa5725cd034a815c55e01750d719bf2d25fb",
+    "bytes": 2377
+  },
+  "Implementations/Additional_Implementation/FEILIAN_4SC/round.sv": {
+    "sha256": "00e558f35523f22d3fb6896dcedddf6a1e13f88f8209b402ee8531dc2b8b4af1",
+    "bytes": 3948
+  },
+  "Implementations/Additional_Implementation/FEILIAN_4SC/subcolumn.sv": {
+    "sha256": "5d0a80dea1ae2466c4a0acc43cc6cbb1644f41b0d30ebcb08a3b7af85b2afd61",
+    "bytes": 1475
+  },
+  "Implementations/Additional_Implementation/FEILIAN_8SC/compression.sv": {
+    "sha256": "eb1c0680be1eabfdf49336fc7b206be738f60029955b71f51025952b2721640d",
+    "bytes": 3700
+  },
+  "Implementations/Additional_Implementation/FEILIAN_8SC/core.sv": {
+    "sha256": "42509a8276c876a50eba131a4cbe7ea07aadcc6c2ae0ec0c7c1793790c13b218",
+    "bytes": 6810
+  },
+  "Implementations/Additional_Implementation/FEILIAN_8SC/feilian.f": {
+    "sha256": "891a09a6955f18ba0b48f1fcba5aa15cc5a39666b15126ce4cc1bacef5137691",
+    "bytes": 71
+  },
+  "Implementations/Additional_Implementation/FEILIAN_8SC/feilian.sv": {
+    "sha256": "c6329cf676331f895146ab1e48a3f7838e4b216d4c6db9f291180933e0cd490c",
+    "bytes": 4413
+  },
+  "Implementations/Additional_Implementation/FEILIAN_8SC/feilian_pkg.sv": {
+    "sha256": "4d0f11b8528e3e696ea50f4c4fdafa5725cd034a815c55e01750d719bf2d25fb",
+    "bytes": 2377
+  },
+  "Implementations/Additional_Implementation/FEILIAN_8SC/round.sv": {
+    "sha256": "0023f09be0f0ea8dca4083ba67e30256eac06b024d05b41d21d0bb2a4fd332ce",
+    "bytes": 5042
+  },
+  "Implementations/Additional_Implementation/FEILIAN_8SC/subcolumn.sv": {
+    "sha256": "5d0a80dea1ae2466c4a0acc43cc6cbb1644f41b0d30ebcb08a3b7af85b2afd61",
+    "bytes": 1475
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD1024/CryptHash_AlgorithmInstance.c": {
+    "sha256": "39c53e5177558d8b2f4432a05b1ffc21e9220152420cf0f8c6a187ad64e3e765",
+    "bytes": 18976
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD1024/CryptHash_AlgorithmInstance.h": {
+    "sha256": "754dba0d4387b235447f9e56e4f0271713099450b9e8442f96bd3daf853b6cd4",
+    "bytes": 1195
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD1024/KAT_CryptHash.c": {
+    "sha256": "ab4d08d943b3cfaff3e9418964753f99b28226f84dfc70427fc677baec868268",
+    "bytes": 21469
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD1024/drng.c": {
+    "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e",
+    "bytes": 11239
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD1024/drng.h": {
+    "sha256": "c4f85a800786e8979bc0cf51ad1f6d474be68d69ae4bc0f8de5df0e0fbe38479",
+    "bytes": 1647
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD512/CryptHash_AlgorithmInstance.c": {
+    "sha256": "398bd1f5043ac44c5f70d302fa187176aba41365d4f2d7e23faef18216ca7ca5",
+    "bytes": 18151
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD512/CryptHash_AlgorithmInstance.h": {
+    "sha256": "b008f945e0a3d7bbecf4905249e6e5a735b5b0c6f6cb6d44b6a5c8a3948bed40",
+    "bytes": 1193
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD512/KAT_CryptHash.c": {
+    "sha256": "ab4d08d943b3cfaff3e9418964753f99b28226f84dfc70427fc677baec868268",
+    "bytes": 21469
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD512/drng.c": {
+    "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e",
+    "bytes": 11239
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD512/drng.h": {
+    "sha256": "c4f85a800786e8979bc0cf51ad1f6d474be68d69ae4bc0f8de5df0e0fbe38479",
+    "bytes": 1647
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD768/CryptHash_AlgorithmInstance.c": {
+    "sha256": "1697abc2b150fbe6ad95c50a775f118ecc7f95799833a8002b46ad8a15b1a888",
+    "bytes": 18138
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD768/CryptHash_AlgorithmInstance.h": {
+    "sha256": "5e21db9b916ef0e1eea7488cbc5ff2a6d73a1209bea7c0a007528928a6e16e57",
+    "bytes": 1193
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD768/KAT_CryptHash.c": {
+    "sha256": "ab4d08d943b3cfaff3e9418964753f99b28226f84dfc70427fc677baec868268",
+    "bytes": 21469
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD768/drng.c": {
+    "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e",
+    "bytes": 11239
+  },
+  "Implementations/Optimized_Implementation/FEILIAN_SIMD768/drng.h": {
+    "sha256": "c4f85a800786e8979bc0cf51ad1f6d474be68d69ae4bc0f8de5df0e0fbe38479",
+    "bytes": 1647
+  },
+  "Implementations/README.txt": {
+    "sha256": "c8b8eb237a1ab3da06338262a159852194ffd4cf1e4f5267adcb89fe7e6d0bc5",
+    "bytes": 5476
+  },
+  "Implementations/Reference_Implementation/FEILIAN1024/CryptHash_AlgorithmInstance.c": {
+    "sha256": "421ee5370e0c5ed33618f371b4ea5a3b14a55f7bc71f0237bf40274e4229f02e",
+    "bytes": 14028
+  },
+  "Implementations/Reference_Implementation/FEILIAN1024/CryptHash_AlgorithmInstance.h": {
+    "sha256": "c014d8ceadd7edc8f3ee2d45507ac4f16f5ad16d5560399bf09238e0edae72f9",
+    "bytes": 1557
+  },
+  "Implementations/Reference_Implementation/FEILIAN1024/KAT_CryptHash.c": {
+    "sha256": "ab4d08d943b3cfaff3e9418964753f99b28226f84dfc70427fc677baec868268",
+    "bytes": 21469
+  },
+  "Implementations/Reference_Implementation/FEILIAN1024/drng.c": {
+    "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e",
+    "bytes": 11239
+  },
+  "Implementations/Reference_Implementation/FEILIAN1024/drng.h": {
+    "sha256": "c4f85a800786e8979bc0cf51ad1f6d474be68d69ae4bc0f8de5df0e0fbe38479",
+    "bytes": 1647
+  },
+  "Implementations/Reference_Implementation/FEILIAN512/CryptHash_AlgorithmInstance.c": {
+    "sha256": "86d9a33275b09161cfffca372d1f728df66879298ff39c09afcff0d706eb2c37",
+    "bytes": 13373
+  },
+  "Implementations/Reference_Implementation/FEILIAN512/CryptHash_AlgorithmInstance.h": {
+    "sha256": "aa66e9634bcfa59b184861b0789e60e9f98c35bb38a0c422d4a2afa5c8372d3b",
+    "bytes": 1188
+  },
+  "Implementations/Reference_Implementation/FEILIAN512/KAT_CryptHash.c": {
+    "sha256": "ab4d08d943b3cfaff3e9418964753f99b28226f84dfc70427fc677baec868268",
+    "bytes": 21469
+  },
+  "Implementations/Reference_Implementation/FEILIAN512/drng.c": {
+    "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e",
+    "bytes": 11239
+  },
+  "Implementations/Reference_Implementation/FEILIAN512/drng.h": {
+    "sha256": "c4f85a800786e8979bc0cf51ad1f6d474be68d69ae4bc0f8de5df0e0fbe38479",
+    "bytes": 1647
+  },
+  "Implementations/Reference_Implementation/FEILIAN768/CryptHash_AlgorithmInstance.c": {
+    "sha256": "3074010e24648ea19b88a71f24c4f55636af422ff01a26ae21d29623ff60380b",
+    "bytes": 13372
+  },
+  "Implementations/Reference_Implementation/FEILIAN768/CryptHash_AlgorithmInstance.h": {
+    "sha256": "6794993d4891dc96a6f4fb48971d9a3fd55392ab05dea223753e1e65a3674313",
+    "bytes": 1188
+  },
+  "Implementations/Reference_Implementation/FEILIAN768/KAT_CryptHash.c": {
+    "sha256": "ab4d08d943b3cfaff3e9418964753f99b28226f84dfc70427fc677baec868268",
+    "bytes": 21469
+  },
+  "Implementations/Reference_Implementation/FEILIAN768/drng.c": {
+    "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e",
+    "bytes": 11239
+  },
+  "Implementations/Reference_Implementation/FEILIAN768/drng.h": {
+    "sha256": "c4f85a800786e8979bc0cf51ad1f6d474be68d69ae4bc0f8de5df0e0fbe38479",
+    "bytes": 1647
+  },
+  "Intellectual property/Intellectual Property Statements.pdf": {
+    "sha256": "da4a3c353a8040a9dc890603846b9671b563429ae0cd2d595817f2cb51c21379",
+    "bytes": 38193319
+  },
+  "Test_Vectors/KAT_2_12_FEILIAN1024.txt": {
+    "sha256": "8e5a2f485a79cd4ac01d7eb1ae0bd0a5dfecdd914215878317f68836cbc6885c",
+    "bytes": 3333335
+  },
+  "Test_Vectors/KAT_2_12_FEILIAN512.txt": {
+    "sha256": "081f5e0640f66c15747dc53bf91cd6206fa8e1151f4d598c50edc2fd43db83ef",
+    "bytes": 2804822
+  },
+  "Test_Vectors/KAT_2_12_FEILIAN768.txt": {
+    "sha256": "27f9d89927d7f0eaf5f0017ed6582cc790dab202a2d3c1c3b0d51ab43cef968f",
+    "bytes": 3067030
+  },
+  "Test_Vectors/KAT_2_23_FEILIAN1024.txt": {
+    "sha256": "538ec522ebd235f0ac357c2518093e6815d9ee01b3a0dfa54d1ad364387d6b5a",
+    "bytes": 1202
+  },
+  "Test_Vectors/KAT_2_23_FEILIAN512.txt": {
+    "sha256": "5041853221fbd24dd6633b09c92ec922a95623b76328db247a490c87cfc29c15",
+    "bytes": 815
+  },
+  "Test_Vectors/KAT_2_23_FEILIAN768.txt": {
+    "sha256": "a989d5abc78f7de2cf26d91f91ac558a3f7599575ebc21bfad73fc940f614b16",
+    "bytes": 1007
+  },
+  "Test_Vectors/KAT_2_33_FEILIAN1024.txt": {
+    "sha256": "c2710701f78493dbe08d6218d481b93a61740686d50665a659a79944037a5909",
+    "bytes": 1211
+  },
+  "Test_Vectors/KAT_2_33_FEILIAN512.txt": {
+    "sha256": "4c40596480c257c6271ee21e8df352966c1a38237ee5a7f87058e8f34f6d48b6",
+    "bytes": 824
+  },
+  "Test_Vectors/KAT_2_33_FEILIAN768.txt": {
+    "sha256": "5fec299cc76a3af4b230fc3705a9993a1e7509b7c7a2ca316f7cc12bba57fcef",
+    "bytes": 1016
+  },
+  "Test_Vectors/KAT_Loop_FEILIAN1024.txt": {
+    "sha256": "5ad6c080a68ba22f824b0eba8aafad4f430a18bdba99a87c5b6003bd491a3e00",
+    "bytes": 2349
+  },
+  "Test_Vectors/KAT_Loop_FEILIAN512.txt": {
+    "sha256": "b4bcc6297d31e12e544ffa6b17a843c072f79d28fb303ce84a8873e418d67cac",
+    "bytes": 2220
+  },
+  "Test_Vectors/KAT_Loop_FEILIAN768.txt": {
+    "sha256": "d2f58275f10dd3338e3c06232782d9d1152174459f6020dc6f9df466b45a27f5",
+    "bytes": 2284
+  }
+}

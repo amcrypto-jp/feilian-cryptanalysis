@@ -1,0 +1,295 @@
+{
+  "printed_values_checked_against_pdf": true,
+  "variants": {
+    "1024": [
+      {
+        "message": "abc",
+        "printed_digest": "0507e4b1ef75d025dfa303ea0a8e2c47f9c7c5503dc12be4d38615f0b1e1ed2b0ec6527ec29778a436be43cd599500fdfe2718a07ba9ca85c94271df47351109dc73a8ec672ba113296b155e56052dd639a0e0a636afea4888db3739e2f282ccda0d93dfbeefde73902c89d42803b6cb7944717688ebc3b2ad2955c31ee6c681",
+        "c_digest": "0507e4b1ef75d025dfa303ea0a8e2c47f9c7c5503dc12be4d38615f0b1e1ed2b0ec6527ec29778a436be43cd599500fdfe2718a07ba9ca85c94271df47351109dc73a8ec672ba113296b155e56052dd639a0e0a636afea4888db3739e2f282ccda0d93dfbeefde73902c89d42803b6cb7944717688ebc3b2ad2955c31ee6c681",
+        "matches": true,
+        "matched_counter_profile": "true",
+        "profiles": {
+          "true": {
+            "counter_bits": [
+              24
+            ],
+            "digest": "0507e4b1ef75d025dfa303ea0a8e2c47f9c7c5503dc12be4d38615f0b1e1ed2b0ec6527ec29778a436be43cd599500fdfe2718a07ba9ca85c94271df47351109dc73a8ec672ba113296b155e56052dd639a0e0a636afea4888db3739e2f282ccda0d93dfbeefde73902c89d42803b6cb7944717688ebc3b2ad2955c31ee6c681",
+            "digest_matches": true,
+            "initial_states_matched": 1,
+            "round_snapshots_matched": 5
+          },
+          "padded": {
+            "counter_bits": [
+              1024
+            ],
+            "digest": "a2a044679023a077a718e6ec69ce823e8f4c6089a45672f8e781c61f3975169f5a2a439f768c14cf5f39505c5d8eb360facde9eb30eb9a9b2e375e6f648f409b6a92491032f5466a46c384537c0caae108b5691b521147f4d68d3fa47d4995d2ea75fa63c0a794c692c41198a758ffbd5bd17fbc91c90b9cf1a036ae8b551a3e",
+            "digest_matches": false,
+            "initial_states_matched": 1,
+            "round_snapshots_matched": 0
+          }
+        }
+      },
+      {
+        "message": "a_times_129",
+        "printed_digest": "e3383d3260ea32ed8fe316f8b27cd6bea25969c43aacdc01360c94861cd190ff95a82f04ebf95e9519eef7c969bb0f0bee439de8851ce6bfbe21ba160f55884daf4263785f6b6d1e7713350145ba5fcdeb63e5e2e376161b5dfa8ef11f09e285ab8ebb5cb6de1b60517922e7d3ffabf2537a269f70f25f5a117484183bc76ee5",
+        "c_digest": "e3383d3260ea32ed8fe316f8b27cd6bea25969c43aacdc01360c94861cd190ff95a82f04ebf95e9519eef7c969bb0f0bee439de8851ce6bfbe21ba160f55884daf4263785f6b6d1e7713350145ba5fcdeb63e5e2e376161b5dfa8ef11f09e285ab8ebb5cb6de1b60517922e7d3ffabf2537a269f70f25f5a117484183bc76ee5",
+        "matches": true,
+        "matched_counter_profile": "true",
+        "profiles": {
+          "true": {
+            "counter_bits": [
+              1024,
+              1032
+            ],
+            "digest": "e3383d3260ea32ed8fe316f8b27cd6bea25969c43aacdc01360c94861cd190ff95a82f04ebf95e9519eef7c969bb0f0bee439de8851ce6bfbe21ba160f55884daf4263785f6b6d1e7713350145ba5fcdeb63e5e2e376161b5dfa8ef11f09e285ab8ebb5cb6de1b60517922e7d3ffabf2537a269f70f25f5a117484183bc76ee5",
+            "digest_matches": true,
+            "initial_states_matched": 2,
+            "round_snapshots_matched": 10
+          },
+          "padded": {
+            "counter_bits": [
+              1024,
+              2048
+            ],
+            "digest": "86e6d0e26e879686fc5d5d848ff7f6845162375c1791f8591b354b1fce4758f2c15f6b76c78a6c3aa08a4dc1730bec58f4f6af775a3803f7a4c852b5d677886b715381ef78a3b58ec3e2373fe7028a6d1635620372d5df3faa004ee3009cdcbf4fa910f09296bb7aea0ba5641a7e59ac6579d3f7363e31411b87960f5f4d8f4e",
+            "digest_matches": false,
+            "initial_states_matched": 2,
+            "round_snapshots_matched": 5
+          }
+        }
+      }
+    ],
+    "768": [
+      {
+        "message": "abc",
+        "printed_digest": "b095f35a68fb71dbbbf14c67e0adf525407097444d3e757475c27122989feaa95de65e6753a625004b0a6ef3f94661415508b9704ff7ca9685a70e8d025e9b181783a3e596036d8adbcab183d8da789f4f495b2a41fce59e2c081a78a9b3b79e",
+        "c_digest": "ea0a78e8fd68db09af5ad1d5755311e6073e2742f9c9f79fcb9966dc869e1454bac2495ca9bfe8ea2f331638ccd98a3f6ecdb42b952889b0ec054a26e934fe94f46b8b5fd6c4bb34b5bfb869028e76f78bbc0c99f1c276becb1adc2739a5abe1",
+        "matches": false,
+        "matched_counter_profile": "padded",
+        "profiles": {
+          "true": {
+            "counter_bits": [
+              24
+            ],
+            "digest": "ea0a78e8fd68db09af5ad1d5755311e6073e2742f9c9f79fcb9966dc869e1454bac2495ca9bfe8ea2f331638ccd98a3f6ecdb42b952889b0ec054a26e934fe94f46b8b5fd6c4bb34b5bfb869028e76f78bbc0c99f1c276becb1adc2739a5abe1",
+            "digest_matches": false,
+            "initial_states_matched": 1,
+            "round_snapshots_matched": 0
+          },
+          "padded": {
+            "counter_bits": [
+              1024
+            ],
+            "digest": "b095f35a68fb71dbbbf14c67e0adf525407097444d3e757475c27122989feaa95de65e6753a625004b0a6ef3f94661415508b9704ff7ca9685a70e8d025e9b181783a3e596036d8adbcab183d8da789f4f495b2a41fce59e2c081a78a9b3b79e",
+            "digest_matches": true,
+            "initial_states_matched": 1,
+            "round_snapshots_matched": 5
+          }
+        }
+      },
+      {
+        "message": "a_times_129",
+        "printed_digest": "00562e578ec89807214f94466f4f2c9830984811b0a5c42488e3a2a9ae75270927fe707f683617b5847bb3b6f40d6b409cee8e6ebf535b831fada3ee5a40a37e3e203f491651360aa544e53be9f556af731c989b7d979e197e9f2b54c58f4c5e",
+        "c_digest": "5fc94695955a87e9defaaf83a7460733ded961a12b7c55073af1611c8f524339af4000edb802c44332b24a4187525040e12f4e530c633797c2283313a832445cb62f926c28f0e45f7ccb8b9c2278096446141c07e46f78a014ab284f37e6d4fd",
+        "matches": false,
+        "matched_counter_profile": "padded",
+        "profiles": {
+          "true": {
+            "counter_bits": [
+              1024,
+              1032
+            ],
+            "digest": "5fc94695955a87e9defaaf83a7460733ded961a12b7c55073af1611c8f524339af4000edb802c44332b24a4187525040e12f4e530c633797c2283313a832445cb62f926c28f0e45f7ccb8b9c2278096446141c07e46f78a014ab284f37e6d4fd",
+            "digest_matches": false,
+            "initial_states_matched": 2,
+            "round_snapshots_matched": 5
+          },
+          "padded": {
+            "counter_bits": [
+              1024,
+              2048
+            ],
+            "digest": "00562e578ec89807214f94466f4f2c9830984811b0a5c42488e3a2a9ae75270927fe707f683617b5847bb3b6f40d6b409cee8e6ebf535b831fada3ee5a40a37e3e203f491651360aa544e53be9f556af731c989b7d979e197e9f2b54c58f4c5e",
+            "digest_matches": true,
+            "initial_states_matched": 2,
+            "round_snapshots_matched": 10
+          }
+        }
+      }
+    ],
+    "512": [
+      {
+        "message": "abc",
+        "printed_digest": "b69fc86f312df402fd5d243c61ab37688572bbcdf2e7de28e737707bf268fa8cee80551c87e0baef6fa34ad98d022401a535b6f14f4403ea8c61fdc44d303d3f",
+        "c_digest": "fc7320c565f60ec6a6ea26585f7c7d1f50931119a1d1fb6ca06a71bed9bce0947e22171373e48e0c9bb1ef36808ef3e5fa56c50ff5838213b54a0750c6ae1270",
+        "matches": false,
+        "matched_counter_profile": "padded",
+        "profiles": {
+          "true": {
+            "counter_bits": [
+              24
+            ],
+            "digest": "fc7320c565f60ec6a6ea26585f7c7d1f50931119a1d1fb6ca06a71bed9bce0947e22171373e48e0c9bb1ef36808ef3e5fa56c50ff5838213b54a0750c6ae1270",
+            "digest_matches": false,
+            "initial_states_matched": 1,
+            "round_snapshots_matched": 0
+          },
+          "padded": {
+            "counter_bits": [
+              1024
+            ],
+            "digest": "b69fc86f312df402fd5d243c61ab37688572bbcdf2e7de28e737707bf268fa8cee80551c87e0baef6fa34ad98d022401a535b6f14f4403ea8c61fdc44d303d3f",
+            "digest_matches": true,
+            "initial_states_matched": 1,
+            "round_snapshots_matched": 5
+          }
+        }
+      },
+      {
+        "message": "a_times_129",
+        "printed_digest": "cf785e5010f69c0dc915a2b5404cd4ce1171e38bd36f7a06983166d3a067f4fdc33110945c39af05a5934a4c4df32790f5ab0d2930769cccf96ae2ac2360bf4c",
+        "c_digest": "a2189955d155788ce69ab2a6db9b5a943eff5d5924876f96ba46d3944947238e3f0f29ea4c15bddda8dd238876b0d6933d6f17a7eb6e166b5e4afb38519b803a",
+        "matches": false,
+        "matched_counter_profile": "padded",
+        "profiles": {
+          "true": {
+            "counter_bits": [
+              1024,
+              1032
+            ],
+            "digest": "a2189955d155788ce69ab2a6db9b5a943eff5d5924876f96ba46d3944947238e3f0f29ea4c15bddda8dd238876b0d6933d6f17a7eb6e166b5e4afb38519b803a",
+            "digest_matches": false,
+            "initial_states_matched": 2,
+            "round_snapshots_matched": 5
+          },
+          "padded": {
+            "counter_bits": [
+              1024,
+              2048
+            ],
+            "digest": "cf785e5010f69c0dc915a2b5404cd4ce1171e38bd36f7a06983166d3a067f4fdc33110945c39af05a5934a4c4df32790f5ab0d2930769cccf96ae2ac2360bf4c",
+            "digest_matches": true,
+            "initial_states_matched": 2,
+            "round_snapshots_matched": 10
+          }
+        }
+      }
+    ]
+  },
+  "recovered_domains": [
+    {
+      "variant": 1024,
+      "example": "abc",
+      "block": 1,
+      "domain": [
+        "0000000000000400",
+        "ffffffffffffffff",
+        "0000000000000000",
+        "0000000000000018"
+      ],
+      "counter_bits": 24
+    },
+    {
+      "variant": 1024,
+      "example": "a_times_129",
+      "block": 1,
+      "domain": [
+        "0000000000000400",
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000400"
+      ],
+      "counter_bits": 1024
+    },
+    {
+      "variant": 1024,
+      "example": "a_times_129",
+      "block": 2,
+      "domain": [
+        "0000000000000400",
+        "ffffffffffffffff",
+        "0000000000000000",
+        "0000000000000408"
+      ],
+      "counter_bits": 1032
+    },
+    {
+      "variant": 768,
+      "example": "abc",
+      "block": 1,
+      "domain": [
+        "0000000000000300",
+        "ffffffffffffffff",
+        "0000000000000000",
+        "0000000000000400"
+      ],
+      "counter_bits": 1024
+    },
+    {
+      "variant": 768,
+      "example": "a_times_129",
+      "block": 1,
+      "domain": [
+        "0000000000000300",
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000400"
+      ],
+      "counter_bits": 1024
+    },
+    {
+      "variant": 768,
+      "example": "a_times_129",
+      "block": 2,
+      "domain": [
+        "0000000000000300",
+        "ffffffffffffffff",
+        "0000000000000000",
+        "0000000000000800"
+      ],
+      "counter_bits": 2048
+    },
+    {
+      "variant": 512,
+      "example": "abc",
+      "block": 1,
+      "domain": [
+        "0000000000000200",
+        "ffffffffffffffff",
+        "0000000000000000",
+        "0000000000000400"
+      ],
+      "counter_bits": 1024
+    },
+    {
+      "variant": 512,
+      "example": "a_times_129",
+      "block": 1,
+      "domain": [
+        "0000000000000200",
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000400"
+      ],
+      "counter_bits": 1024
+    },
+    {
+      "variant": 512,
+      "example": "a_times_129",
+      "block": 2,
+      "domain": [
+        "0000000000000200",
+        "ffffffffffffffff",
+        "0000000000000000",
+        "0000000000000800"
+      ],
+      "counter_bits": 2048
+    }
+  ],
+  "verified_totals": {
+    "digests": 6,
+    "initial_states": 9,
+    "round_snapshots": 45,
+    "domains": 9
+  }
+}

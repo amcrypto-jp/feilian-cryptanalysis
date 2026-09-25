@@ -1,0 +1,39 @@
+{
+  "sigma0": {
+    "polynomial": "x^48 + x^5 + 1",
+    "gcd_with_word_modulus": "1",
+    "linear_rank": 64,
+    "fixed_space_dimension": 1
+  },
+  "sigma1": {
+    "polynomial": "x^40 + x^11 + 1",
+    "gcd_with_word_modulus": "1",
+    "linear_rank": 64,
+    "fixed_space_dimension": 1
+  },
+  "pi_fraction_first_16_words": [
+    "243f6a8885a308d3",
+    "13198a2e03707344",
+    "a4093822299f31d0",
+    "082efa98ec4e6c89",
+    "452821e638d01377",
+    "be5466cf34e90c6c",
+    "c0ac29b7c97c50dd",
+    "3f84d5b5b5470917",
+    "9216d5d98979fb1b",
+    "d1310ba698dfb5ac",
+    "2ffd72dbd01adfb7",
+    "b8e1afed6a267e96",
+    "ba7c9045f12c7f99",
+    "24a19947b3916cf7",
+    "0801f2e2858efc16",
+    "636920d871574e69"
+  ],
+  "sqrt_fraction_first_64_bits": [
+    "6a09e667f3bcc908",
+    "bb67ae8584caa73b",
+    "3c6ef372fe94f82b",
+    "a54ff53a5f1d36f1"
+  ],
+  "modulus_factorization": "(x + 1)^64"
+}

@@ -1,0 +1,33 @@
+{
+  "drng_sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e",
+  "scope": "Static source observations and file identity within the FEILIAN submission; no DRNG execution or failure injection.",
+  "feilian_copies": [
+    {
+      "file": "Implementations/Optimized_Implementation/FEILIAN_SIMD1024/drng.c",
+      "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e"
+    },
+    {
+      "file": "Implementations/Optimized_Implementation/FEILIAN_SIMD512/drng.c",
+      "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e"
+    },
+    {
+      "file": "Implementations/Optimized_Implementation/FEILIAN_SIMD768/drng.c",
+      "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e"
+    },
+    {
+      "file": "Implementations/Reference_Implementation/FEILIAN1024/drng.c",
+      "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e"
+    },
+    {
+      "file": "Implementations/Reference_Implementation/FEILIAN512/drng.c",
+      "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e"
+    },
+    {
+      "file": "Implementations/Reference_Implementation/FEILIAN768/drng.c",
+      "sha256": "0df0ac78c828bd43bf05724398fa530767d753aa7801a1d1fa5d621321ec797e"
+    }
+  ],
+  "path_roots": {
+    "feilian_copies": "FEILIAN submission root"
+  }
+}

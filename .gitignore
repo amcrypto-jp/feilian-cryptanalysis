@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+*.sage.py
+*.so
+.venv/
+verification-*/
+.DS_Store
+Thumbs.db

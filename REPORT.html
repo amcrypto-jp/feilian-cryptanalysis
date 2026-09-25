@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Mounir IDRASSI (mounir@amcrypto.jp)" />
+  <meta name="dcterms.date" content="2026-09-24" />
+  <title>FEILIAN: technical assessment of the submitted specification and implementations</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">:root { color-scheme: light; --ink: #18242d; --accent: #174e67; }
+html { background: #f0f3f5; }
+body { box-sizing: border-box; max-width: 980px; margin: 2rem auto;
+padding: 3.4rem 4rem; background: white; color: var(--ink);
+font: 17px/1.65 Georgia, "DejaVu Serif", serif; }
+header { margin-bottom: 2.5rem; padding-bottom: 1.6rem; border-bottom: 2px solid var(--accent); }
+h1, h2, h3, .subtitle, .author, .date { font-family: "DejaVu Sans", Arial, sans-serif; }
+header h1 { font-size: 2rem; line-height: 1.23; letter-spacing: -0.03em; }
+.subtitle { color: var(--accent); font-size: 1.02rem; }
+.author { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; }
+.date { font-size: .9rem; margin-top: .2rem; color: #4b5963; }
+h1:not(.title), h2 { font-size: 1.3rem; line-height: 1.35; margin-top: 2.3rem; color: var(--accent); }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { color: #102e40; }
+p { margin: .9rem 0; }
+table { width: 100%; border-collapse: collapse; margin: 1.4rem 0; font-size: .86rem; line-height: 1.4; }
+.table-scroll { overflow-x: auto; max-width: 100%; }
+.table-scroll:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+th { color: var(--accent); text-align: left; border-top: 2px solid var(--accent); border-bottom: 1px solid #b1bfc8; }
+td, th { padding: .65rem .5rem; vertical-align: top; }
+tbody tr:nth-child(even) { background: #f4f7f9; }
+tbody tr:last-child { border-bottom: 1px solid #b1bfc8; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: .83em; overflow-wrap: anywhere; }
+pre { padding: 1rem; background: #f3f6f8; overflow-x: auto; line-height: 1.4; }
+.math.display, math[display="block"] { display: block; overflow-x: auto; margin: 1.1rem 0; padding: .2rem 0; }
+math { font-size: 1.03em; }
+li { margin: .7rem 0; }
+@media (max-width: 700px) {
+body { margin: 0; padding: 1.5rem; font-size: 16px; }
+header h1 { font-size: 1.7rem; }
+table { font-size: .76rem; }
+.table-scroll table { min-width: 38rem; }
+td, th { padding: .45rem .25rem; }
+}
+@media print {
+html { background: white; }
+body { max-width: none; margin: 0; padding: 0; font-size: 10.5pt; }
+a { color: inherit; }
+h1, h2, h3 { break-after: avoid; }
+tr, .math.display { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">FEILIAN: technical assessment of the submitted
+specification and implementations</h1>
+<p class="subtitle">Cryptographic review · Version 1.0.0</p>
+<p class="author">Mounir IDRASSI (<a href="mailto:mounir@amcrypto.jp">mounir@amcrypto.jp</a>)</p>
+<p class="date">24 September 2026</p>
+</header>
+<p><strong>Abstract.</strong> This review examines the FEILIAN hash
+submission dated 30 June 2026, including its specification, six C
+implementations, four RTL architectures and validation material. Static
+analysis identifies a message-length binding defect in the 1SC, 4SC and
+8SC hardware wrappers; the 2SC counter path differs. The specification
+and implementations disagree on security-relevant details. All six
+Appendix B examples are exactly reproduced: the 512/768 examples use
+cumulative padded-block lengths, while the 1024 examples use actual
+message lengths. Verification covers all 45 printed round states and
+nine initial states. Ordinary tests pass all 24,582 C-to-KAT
+comparisons. Exact arithmetic confirms the Sigma maps’ invertibility and
+intended constants. Shared test-generation code also has portability and
+error-propagation defects, distinct from the hash primitive. The
+security discussion does not establish the claimed composition, margin
+or application guarantees. No full-round cryptanalytic break of the
+correctly encoded software hash is established. A corrected, unambiguous
+submission and renewed independent review are recommended.</p>
+<p><strong>Prior work and preparation.</strong> Markku-Juhani O.
+Saarinen’s <a href="https://ngcc.dev/reports/hash-10.html">FEILIAN
+report of 23 September 2026</a>, credited there with AI assistance, was
+consulted before this review. It reports silent allocation failure in
+the reference C implementations. R5 extends that source-level
+observation to the optimized implementations; it is not presented as an
+independently discovered original finding. R1–R4 and R6–R8 describe
+additional observations relative to that report as consulted on 24
+September; no exhaustive novelty claim is made. A second researcher
+subsequently supplied a private review. That researcher is credited for
+the Appendix B counter explanation and for raising the additional
+hardware and shared-DRNG issues incorporated after critical checking.
+The second review is not endorsed as a whole; its broader experimental
+claims are not included in this report’s verified coverage. The <a href="PROVENANCE.md">provenance record</a> identifies the reviewed files
+and the limits of verification.</p>
+<p><strong>AI-use disclosure.</strong> OpenAI Codex assisted with source
+and specification analysis, mathematical checks, verification code and
+publication preparation. The executable coverage and the static
+conclusions are reported separately. This package is prepared for Mounir
+IDRASSI’s review and possible release; preparation does not assert that
+he has independently verified every conclusion. See <a href="AI_DISCLOSURE.md">AI_DISCLOSURE.md</a>.</p>
+<h1 id="assessment-and-scope">Assessment and scope</h1>
+<p><strong>Recommendation: withhold a positive security assessment and
+integration approval for this submission.</strong> There is a
+high-severity message-length encoding defect in three supplied hardware
+implementations, several mutually inconsistent definitions of the hash,
+and substantial gaps in the argument supporting its security claims.
+These are sufficient grounds to request a corrected submission and
+renewed review. This review does <strong>not</strong> establish a
+full-round cryptanalytic break of the hash defined by the written
+compression algorithm or of the normally operating C
+implementations.</p>
+<p>The most consequential concrete finding beyond the <a href="https://ngcc.dev/reports/hash-10.html">existing allocation-failure
+report</a> is at the boundary between zero padding, the bit counter, and
+the RTL compression interface. The 1SC, 4SC, and 8SC cores omit the
+current block’s length from the compression input. The consequence is
+loss of injective message encoding, independently of how strong the ARX
+compression function is. The 2SC core contains a different, corrected
+counter path.</p>
+<p>The principal source is <a href="data/SOURCES.md#source-1">Specification.pdf</a>, dated 30 June
+2026. Page references below are the <strong>printed page
+numbers</strong>; the PDF viewer’s page number is one greater. Its
+SHA-256 is
+<code>8e3a9a109f3188ab57cbd0156c243f80a6453051cf98006dfef11d66bdeb5fa8</code>.
+The <a href="data/input_manifest.json">input manifest</a> fingerprints
+all 74 original files. The archive digest on the public report was not
+checked against an original ZIP, which was not present here.</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 31%" />
+<col style="width: 31%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Finding</th>
+<th style="text-align: left;">Assessment</th>
+<th style="text-align: left;">Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">R1</td>
+<td style="text-align: left;">Current-block length omitted by
+1SC/4SC/8SC RTL</td>
+<td style="text-align: left;">High severity for those hardware hash
+implementations</td>
+<td style="text-align: left;">Static dataflow and state-machine
+analysis; no RTL simulation</td>
+</tr>
+<tr>
+<td style="text-align: left;">R2</td>
+<td style="text-align: left;">Chapter 2, C, and RTL do not define one
+consistent algorithm</td>
+<td style="text-align: left;">Blocks conformance and transfer of
+security conclusions</td>
+<td style="text-align: left;">Source comparison, PDF rendering,
+independent model, exact constant checks</td>
+</tr>
+<tr>
+<td style="text-align: left;">R3</td>
+<td style="text-align: left;">Appendix B uses padded counts for 512/768,
+true counts for 1024</td>
+<td style="text-align: left;">Security-relevant encoding inconsistency;
+C/KATs use true counts</td>
+<td style="text-align: left;">All six digests, 45 round snapshots, nine
+initial states and nine domains verified</td>
+</tr>
+<tr>
+<td style="text-align: left;">R4</td>
+<td style="text-align: left;">C bit-input and length-conversion
+contracts are incomplete</td>
+<td style="text-align: left;">Correctness/security defect;
+platform-dependent severity</td>
+<td style="text-align: left;">Static analysis of all six C
+implementations</td>
+</tr>
+<tr>
+<td style="text-align: left;">R5</td>
+<td style="text-align: left;">Allocation failure is silently accepted in
+optimized C too</td>
+<td style="text-align: left;">Extends the scope of the existing
+implementation finding</td>
+<td style="text-align: left;">Static analysis; allocation failure not
+induced</td>
+</tr>
+<tr>
+<td style="text-align: left;">R6</td>
+<td style="text-align: left;">Proof and security-margin claims are not
+established</td>
+<td style="text-align: left;">Major assurance gap, not a demonstrated
+hash break</td>
+<td style="text-align: left;">Mathematical and compositional review</td>
+</tr>
+<tr>
+<td style="text-align: left;">R7</td>
+<td style="text-align: left;">MAC/KDF/XOF recommendations exceed what
+was established</td>
+<td style="text-align: left;">Application specifications need separate
+review</td>
+<td style="text-align: left;">Domain, entropy, interface, and
+proof-scope analysis</td>
+</tr>
+<tr>
+<td style="text-align: left;">R8</td>
+<td style="text-align: left;">Shared DRNG and KAT driver have
+portability and error-handling defects</td>
+<td style="text-align: left;">Test-generation portability and error
+handling</td>
+<td style="text-align: left;">Static source review and identical-file
+hashes; no failure injection</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="r1.-hardware-message-length-binding">R1. Hardware message-length
+binding</h1>
+<p>Section 2.3, pp. 12–13, updates <code>t</code> to include the current
+block <strong>before</strong> calling the compression function. This is
+a security requirement because the message is padded with zeros and has
+no in-block delimiter or encoded length.</p>
+<p>In the <a href="data/SOURCES.md#source-2">8SC core</a>,
+<code>cf_domain</code> is made from <code>hashed_bits_reg</code>. That
+register represents only the completed previous blocks. Its increment
+occurs in the <code>WAIT_CF</code> completion branch at line 160, after
+the compression output has already been calculated. The last-block flag
+is provided correctly, but the current final-block length is absent from
+the domain used to obtain the final digest. The compression module
+latches the supplied domain on <code>start</code>, so a later counter
+update cannot repair the result; see <a href="data/SOURCES.md#source-3">compression.sv</a>.</p>
+<p>The same defect occurs in the <a href="data/SOURCES.md#source-4">1SC
+core</a> and <a href="data/SOURCES.md#source-5">4SC core</a>. Their
+domain assignments are at line 135 and completion-time counter updates
+at line 157. Neither interface supplies a separately authenticated
+final-block length to compression.</p>
+<p>Zero padding is not injective by itself. A final flag distinguishes
+the role of a block, but does not distinguish all possible logical
+lengths within that role. Removing the actual final length therefore
+permits distinct logical inputs to have an identical encoded compression
+transcript. No differential property, round reduction, birthday search,
+or allocation failure is needed for this structural failure. It affects
+variable-length hashing in these wrappers during normal execution. It
+should be treated as a collision-resistance failure of their message
+encoding, not as evidence that the specified ARX primitive has been
+cryptanalytically broken. Protocols imposing an independently
+authenticated, fixed input length would need a separate impact
+assessment.</p>
+<p>The <a href="data/SOURCES.md#source-6">2SC core</a> is an important
+exception: it computes <code>hashed_bits_updated</code> from the current
+input length and passes that value into <code>make_domain</code>. Do not
+report this particular defect as affecting all four architectures.</p>
+<p>The corrective requirement is to form one accepted block transaction
+containing the block, final flag, and cumulative bit count
+<strong>including that block</strong>, and preserve that tuple for the
+complete compression operation. Counter overflow and invalid final byte
+counts also require explicit rejection. The acceptance invariant is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi></mrow></msub><mo>=</mo><msub><mi>t</mi><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">v</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">s</mi></mrow></msub><mo>+</mo><msub><mi>ℓ</mi><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{\mathrm{compression}}=t_{\mathrm{previous}}+\ell_{\mathrm{current}}</annotation></semantics></math>.
+Checking only compression-round arithmetic will not detect an error in
+the wrapper that supplies this count.</p>
+<p>This finding follows from the source’s dataflow. No RTL simulation
+was performed in this review. The source-level conclusion is strong; a
+corrected implementation still needs end-to-end RTL validation before
+deployment.</p>
+<h1 id="r2.-inconsistent-algorithm-definitions">R2. Inconsistent
+algorithm definitions</h1>
+<p>There are independent discrepancies, so correcting one typo is
+insufficient.</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 39%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Detail</th>
+<th style="text-align: left;">Chapter 2 / specification</th>
+<th style="text-align: left;">Supplied implementation evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">IV word 7</td>
+<td style="text-align: left;"><code>0x3D84D5B5B5470917</code>, p. 3</td>
+<td style="text-align: left;">C and RTL use
+<code>0x3F84D5B5B5470917</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">AddConstant placement</td>
+<td style="text-align: left;">Tweak in row index 1, constants in row
+index 3, p. 9</td>
+<td style="text-align: left;">All six C versions and all four RTL round
+implementations use constants in row index 1 and tweak in row index
+3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Counter word order</td>
+<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><msub><mi>t</mi><mn>0</mn></msub><mo>∥</mo><msub><mi>t</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">t=t_0\mathbin{\|}t_1</annotation></semantics></math>;
+significance should be made explicit alongside the little-endian
+rule</td>
+<td style="text-align: left;">C and 2SC use high word, then low word;
+1SC/4SC/8SC use low word, then high word</td>
+</tr>
+<tr>
+<td style="text-align: left;">Count supplied to compression</td>
+<td style="text-align: left;">Includes the current block, p. 13</td>
+<td style="text-align: left;">C and 2SC do; 1SC/4SC/8SC do not</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hardware variant labels</td>
+<td style="text-align: left;">README labels 1SC and 4SC as 512-bit</td>
+<td style="text-align: left;">Every supplied <code>feilian_pkg.sv</code>
+sets <code>DIGEST_BITS = 1024</code> and
+<code>VERSION = 0x400</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The AddConstant discrepancy was checked against a rendered PDF page,
+not inferred solely from text extraction. The scalar implementation’s <a href="data/SOURCES.md#source-7">round functions</a> are explicit.
+Appendix A’s C listing also follows the implementation’s placement, so
+the disagreement exists within the PDF itself.</p>
+<p>The C <a href="data/SOURCES.md#source-8">counter helper</a> stores
+the high word in <code>hash_bits[0]</code> despite later comments
+identifying that slot as the low word. The SIMD
+<code>_mm256_set_epi64x</code> call agrees with the executed C ordering;
+some accompanying comments do not. Correcting the RTL count timing
+without also settling word order will leave a conformance failure.</p>
+<p>Sage interval arithmetic confirmed that the C IV matches the first
+256 hexadecimal fractional digits of π, including the <code>3F</code>
+word. Exact integer square-root checks reproduced all four round
+constants. This makes the printed <code>3D</code> value look like an
+erratum, but the submitters must designate the canonical algorithm. The
+text’s description of these IV values as decimal digits is also
+inaccurate.</p>
+<p>An independent Python implementation, using Chapter 2’s IV and
+AddConstant placement, little-endian message words from §3.2, and the C
+high-word-first counter convention, produced different hashes from the C
+code for the empty message, <code>abc</code>, and 129 repetitions of
+<code>a</code>, for every digest size. This is a conformance comparison
+on ordinary messages. For example, the first 16 digest bytes for
+FEILIAN-1024(<code>abc</code>) are:</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Interpretation</th>
+<th style="text-align: left;">First 16 digest bytes, hexadecimal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Supplied scalar/SIMD C</td>
+<td style="text-align: left;"><code>0507e4b1ef75d025dfa303ea0a8e2c47</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 2 under the stated decoding
+conventions</td>
+<td style="text-align: left;"><code>8b27103d98eabd06b36a8a1d2148d8e6</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Security analysis must identify which version it covers. Tweak
+placement and counter ordering affect the actual permutation family,
+including which symmetry conditions correspond to valid message lengths.
+They cannot be dismissed as output formatting differences.</p>
+<p>The hardware digest formatting and MMIO word order need an explicit
+byte-level contract as well. The cores reverse bytes within words and
+reverse word positions when forming the packed digest, while the MMIO
+port reads increasing packed slices. A driver may compensate, but no
+such driver contract or end-to-end testbench is supplied.</p>
+<p>The <a href="data/SOURCES.md#source-13">top-level modules</a> declare
+<code>DIGEST_BITS</code> but instantiate <code>core u_core</code>
+without forwarding that parameter. The package’s <code>VERSION</code>
+also remains fixed, and the digest formatting and MMIO loops use the
+fixed sixteen-word state width. Changing only the top-level digest width
+therefore does not select FEILIAN-512 or FEILIAN-768 correctly. Width
+propagation, version selection, digest selection and slice bounds must
+be specified and reviewed together.</p>
+<p>The hardware input interface supplies a byte count, with no
+partial-bit count. Its supported domain is therefore byte-aligned
+messages; this is an interface limitation, not evidence of mishandling a
+bit-length argument that the hardware never accepts. The eight-bit
+<code>valid_bytes</code> field also lacks rejection of final-block
+values greater than the 128-byte block capacity. For non-final blocks
+the helper always adds 1,024 bits. The 2SC path uses the final count
+before compression, whereas the other three defer it as described in R1.
+A legal range, empty-message convention and rejection behavior must be
+defined at the accepted-transaction boundary. These are static
+observations; no out-of-range request was executed.</p>
+<p>Reset and bus-handshake behavior also need an explicit integration
+contract. A datapath register initialized on an accepted start before
+producing valid output is not defective merely because it lacks reset. A
+reset-required completion state or level-sensitive start is likewise
+not, by itself, a security vulnerability. These observations do not add
+separate reset or handshake findings.</p>
+<h1 id="r3.-appendix-b-uses-two-different-counter-conventions">R3.
+Appendix B uses two different counter conventions</h1>
+<p>All six supplied C implementations passed every entry in their
+corresponding <code>KAT_2_12</code> file: 4,097 lengths, from 0 through
+4,096 bits. That is 24,582 successful C-to-KAT comparisons. The
+independent Python model matched 20 selected KAT cases per version,
+covering partial bytes and block boundaries, and all nine additional
+ordinary example computations. Those C implementations use the
+cumulative true message length.</p>
+<p>The second reviewer identified an exact explanation for the four
+previously unexplained Appendix B mismatches. Keeping the C IV, round
+operations, version selection, high-word-first counter and digest
+serialization, the following counts reproduce every printed example:</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 19%" />
+<col style="width: 28%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Variant</th>
+<th style="text-align: right;"><code>abc</code>: final count (bits)</th>
+<th style="text-align: left;">129 bytes of <code>a</code>: first / final
+count (bits)</th>
+<th style="text-align: left;">Matching convention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FEILIAN-1024</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">1,024 / 1,032</td>
+<td style="text-align: left;">Cumulative true message length</td>
+</tr>
+<tr>
+<td style="text-align: left;">FEILIAN-768</td>
+<td style="text-align: right;">1,024</td>
+<td style="text-align: left;">1,024 / 2,048</td>
+<td style="text-align: left;">Cumulative padded-block length</td>
+</tr>
+<tr>
+<td style="text-align: left;">FEILIAN-512</td>
+<td style="text-align: right;">1,024</td>
+<td style="text-align: left;">1,024 / 2,048</td>
+<td style="text-align: left;">Cumulative padded-block length</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This was independently checked with the earlier review’s model,
+against a fresh extraction of the hash-identified PDF. All <strong>six
+digests, 45 printed round snapshots and nine initial states</strong>
+agree under the assignments above. The check also recovers all nine
+domain values from the first-round states and confirms their
+high-word-first counter layout. It enforces the stated assignment for
+each variant, rather than merely accepting whichever convention happens
+to match. The <a href="evidence/appendix_comparison.json">complete
+evidence</a>, <a href="data/appendix_states.json">numeric
+transcriptions</a> and <a href="code/check_appendix.py">bounded
+ordinary-example checker</a> are included.</p>
+<p>The four 512/768 digests still disagree with C. For example,
+FEILIAN-512(<code>abc</code>) begins
+<code>b69fc86f312df402fd5d243c61ab3768</code> in Appendix B and
+<code>fc7320c565f60ec6a6ea26585f7c7d1f</code> in C. What is now
+established is the precise numerical explanation. The historical
+generator version and reason for this discrepancy remain unconfirmed
+until the submitters provide provenance.</p>
+<p>This is security-relevant encoding, not simply a different display
+convention. Padded-block counts do not bind the actual final logical
+length under zero-only padding. The final flag does not restore that
+missing information. Any argument requiring injective message encoding
+cannot be transferred to the convention illustrated by the 512/768
+appendix examples. This observation concerns the appendix convention; it
+does not show that the normally operating supplied C/KAT implementation
+uses that convention, and it does not establish a full-round
+cryptanalytic break of correctly encoded FEILIAN.</p>
+<p>The initial IV matrices are displayed transposed relative to the
+numeric row-major convention. The computed round states and the
+second-block initial state are row-major. A uniform transpose of every
+displayed matrix would be incorrect. The checker normalizes only the
+initial IV display.</p>
+<p>The correction must retain actual message-length binding and
+regenerate all examples from the designated algorithm. Treating padded
+and true counts as equally acceptable options would leave the security
+problem unresolved. Agreement with KATs generated from the same
+implementation demonstrates reproducibility, not independent agreement
+with the specification or a valid security proof.</p>
+<h1 id="r4.-bit-input-and-length-contracts-in-c">R4. Bit-input and
+length contracts in C</h1>
+<p>The same padding logic appears in all six C implementations. In the
+scalar <a href="data/SOURCES.md#source-9">padding function</a>,
+<code>memcpy</code> copies the complete final byte, but the unused bits
+of a partial final byte are not masked. Those bits subsequently enter
+the compression function. Either the API must expressly require a
+canonical final byte and reject violations, or the implementation must
+mask the bits outside <code>msg_len_bits</code>. The current header
+states only that the argument is the number of message bits.</p>
+<p>This is a failure to make the result depend only on the declared
+bitstring. It is not evidence of a compression-function collision. The
+KAT generator’s DRNG masks unused bits itself, which explains why the
+supplied partial-bit KATs do not test this API boundary; see <a href="data/SOURCES.md#source-10">drng.c</a>.</p>
+<p>There is a separate allocation-size arithmetic issue. The code adds
+the byte-rounded message length to the independently byte-rounded
+padding length. For a non-byte-aligned message, that allocates one byte
+more than the necessary whole-block buffer. This is harmless
+over-allocation by itself; it should not be misreported as a proven
+out-of-bounds access. The missing final-byte mask remains
+significant.</p>
+<p>The <a href="data/SOURCES.md#source-11">public API</a> accepts
+<code>unsigned long long</code> bit lengths, then casts them to
+<code>size_t</code> without checking representability. On a platform
+with narrower <code>size_t</code>, the declared message length can be
+silently truncated. This is a potentially serious correctness defect for
+a supposedly portable implementation. On platforms where the widths
+match, the subsequent <code>msg_bits + 7</code> still needs an overflow
+check. These conclusions are static; no 32-bit binary or extreme-length
+request was run.</p>
+<p>The presence of a two-word counter does not make this one-shot API
+support the specification’s entire domain of messages shorter than
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>2</mn><mn>128</mn></msup><annotation encoding="application/x-tex">2^{128}</annotation></semantics></math>
+bits. It needs a streaming interface with validated counter updates, or
+an expressly smaller supported-input limit. A streaming implementation
+also avoids allocating a second copy of the complete message.</p>
+<p>Output-length semantics need clarification too. The instance fixes
+<code>FEILIAN_VERSION</code> at compile time but accepts any positive
+<code>digest_len_bits</code> up to its maximum and truncates the digest.
+A shortened result from the FEILIAN1024 implementation is therefore a
+truncation of the 1024-version hash, not the independently versioned
+FEILIAN512 hash. That can be a legitimate API choice, but it must not be
+confused with selecting another family member. Reject unsupported named
+lengths or expose raw truncation and family selection distinctly. For a
+permitted non-byte-aligned output length, a buffer of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">⌈</mo><mi>t</mi><mi>/</mi><mn>8</mn><mo stretchy="false" form="postfix">⌉</mo></mrow><annotation encoding="application/x-tex">\lceil t/8\rceil</annotation></semantics></math>
+bytes with unused bits cleared is a normal representation of a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-bit
+digest; storage rounding alone is not a vulnerability.</p>
+<h1 id="r5.-allocation-failure-handling-in-optimized-c">R5.
+Allocation-failure handling in optimized C</h1>
+<p>Saarinen’s <a href="https://ngcc.dev/reports/hash-10.html">23
+September report</a> identifies reference implementations returning
+successful all-zero digests after padding allocation fails. Static
+inspection shows the same path in the <a href="data/SOURCES.md#source-12">SIMD implementation</a>: the internal
+routine clears the digest and returns without an error status, and the
+public wrapper returns success. The 512- and 768-bit optimized sources
+use the same logic.</p>
+<p>The fix must propagate failure through the public return code and
+leave the output unusable as a successful digest. Streaming reduces the
+memory-pressure exposure but does not replace correct error propagation.
+No allocation failure was induced during this review, and the public
+report’s witness was not rerun.</p>
+<h1 id="r6.-mathematical-and-security-arguments">R6. Mathematical and
+security arguments</h1>
+<p>FEILIAN uses a 1,024-bit chaining state, a 1,024-bit message block,
+and a public tweak containing version, final flag, and a 128-bit
+counter. Its five phases each comprise one message-bearing round and
+three message-free rounds. Each full round has two SubColumn/ShiftRow
+layers. Compression applies a Davies–Meyer feedforward,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>h</mi><mo>′</mo></msup><mo>=</mo><msub><mi>E</mi><mrow><mi>m</mi><mo>,</mo><mi>t</mi><mi>w</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo><mo>⊕</mo><mi>h</mi></mrow><annotation encoding="application/x-tex">h&#39; = E_{m,tw}(h) \oplus h</annotation></semantics></math>.</p>
+<p>This architecture is intelligible and uses established ingredients.
+Its security still depends on the concrete message- and tweak-dependent
+permutation family. Naming HAIFA, Davies–Meyer, or Even–Mansour does not
+establish that family behaves like the ideal object used in a
+theorem.</p>
+<p>First, §4.3.1, pp. 19–20, proves a statement about a compression
+interface with a <strong>salt</strong> and final padding that encodes
+message length. The preceding FEILIAN definition instead has a
+<strong>final flag</strong>, no salt, and zero padding without an
+in-block length field. The simulator validates the former padding and
+does not model the actual flag. The proof therefore does not establish
+the stated result for the specified construction. The original <a href="https://eprint.iacr.org/2007/278.pdf">HAIFA paper</a> describes
+explicit padding and salt conventions; adopting its name does not
+transfer every result to a changed encoding.</p>
+<p>There is a plausible repair direction, which should be distinguished
+from a demonstrated mode failure: with an exact, non-wrapping bit count,
+a correctly authenticated final flag, canonical partial bytes, and a
+defined empty-message case, the written message-to-transcript encoding
+is injective. Unequal total lengths differ in the final count;
+equal-length distinct messages differ in their data. Zero padding is
+therefore not intrinsically fatal to the written design. R1 is the
+concrete case where an implementation removes an essential part of that
+argument.</p>
+<p>Second, even within its stated ideal model, the simulator description
+is incomplete. Its accounting for unreachable queries, later connections
+into the reachable graph, and out-of-order queries is not sufficient to
+justify the claimed perfect consistency. The stated B2 event also needs
+to distinguish the public IV from guessed unknown states. The query
+measure must account for the total number of compression evaluations or
+processed blocks: one variable-length hash query can process many
+blocks. A complete theorem needs an exact interface, game, simulator,
+resource measure, and bad-event proof.</p>
+<p>Third, the displayed advantage bound
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>q</mi><mn>2</mn></msup><mi>/</mi><msup><mn>2</mn><mn>1024</mn></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(q^2 / 2^{1024})</annotation></semantics></math>
+becomes non-informative around the 512-bit birthday scale. Even a
+correct version of that bound would not, by itself, establish a
+1,024-bit preimage or second-preimage claim. Those properties need their
+own bounds and input-length/resource assumptions. Conversely, the
+birthday-scale limit of this proof is not itself a preimage attack;
+these are different statements.</p>
+<p>Fourth, §4.4 changes idealizations. The <a href="https://www.cs.ucdavis.edu/~rogaway/papers/hash.pdf">Black–Rogaway–Shrimpton
+analysis</a> gives black-box results for block-cipher-based hashing
+under its stated model. It does not prove that FEILIAN’s
+repeated-message ARX structure is an ideal cipher, or automatically
+identify Davies–Meyer compression with the independent random
+compression oracle assumed by §4.3.1. The acknowledged Davies–Meyer
+fixed-point property reinforces the need to keep those interfaces and
+assumptions distinct. For a freely chosen compression state, its cost is
+comparable to one inverse of the pre-feedforward permutation, not a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>2</mn><mn>512</mn></msup><annotation encoding="application/x-tex">2^{512}</annotation></semantics></math>
+birthday search. Reaching such a state from the fixed hash IV under
+valid counters, or establishing a fixed point of the separate XOF mode,
+are different questions. No such reachability result or witness is
+established here. No complete composition argument is provided.</p>
+<p>Fifth, the component evidence does not quantify a full-compression
+security margin. The statistical tests in §4.2 and average single-bit
+avalanche table in §4.5.3 measure useful implementation properties, but
+cannot certify collision or preimage complexity. They do not establish
+bounds on worst-case structured differences, differential hulls, related
+message/tweak behavior, or full-round attacks. NIST itself cautions
+against using its <a href="https://www.nist.gov/news-events/news/2022/04/decision-revise-nist-sp-800-22-rev-1a">SP
+800-22 statistical suite as a cryptographic security assessment</a>.</p>
+<p>The critical composition questions are:</p>
+<ul>
+<li>The same message is injected five times, with no expansion or word
+reordering. Security analysis must include those correlated inputs;
+analyzing message-free permutations expressly leaves out that
+freedom.</li>
+<li>Constants repeat within each phase and the first and fifth phase
+have the same constant pattern. The phases are not independent random
+permutations.</li>
+<li>Column-wise SubColumn and row shifts retain a structural
+relationship with cyclic column permutations. Rotating the constants
+between phases makes joint analysis of the message and tweak essential.
+Whether a related parameter setting is a valid hash invocation depends
+on version, flag, length, and counter-word conventions.</li>
+<li>Reaching an attacker-selected internal state from the fixed IV is a
+real constraint, but the assertion that this necessarily costs at least
+a birthday search is not a general theorem. Likewise, secrecy of a
+chaining state alone does not prove every keyed application secure.</li>
+<li>The final message injection occurs in round 17, leaving seven
+SubColumn/ShiftRow layers after that injection. That is not evidence of
+an attack, but it explains why counting all twenty rounds is an
+incomplete way to state the margin against message-dependent
+methods.</li>
+</ul>
+<p>The discussion of slide attacks in §4.6.2 correctly recognizes
+repeated structure but then appeals to diffusion and nonlinear
+operations making a slid relation improbable. Those properties alone do
+not exclude structural slide relations. The meet-in-the-middle and
+boomerang discussions similarly assert adequate phase counts without
+supplying quantitative bounds or reproducible supporting searches. These
+are hypotheses to investigate, not established exclusions.</p>
+<p>There are also checkable errors in the security text. On p. 25 the
+displayed boomerang criterion is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>p</mi><mn>2</mn></msup><msup><mi>q</mi><mn>2</mn></msup><mo>&gt;</mo><msup><mn>2</mn><mrow><mn>2</mn><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">p^2q^2 &gt; 2^{2n}</annotation></semantics></math>,
+which is impossible for probabilities. This was visually verified in the
+PDF. Correcting the missing minus sign would not resolve the more
+general issue: the appropriate random baseline and the use of
+<code>p^2 q^2</code> require a precisely defined experiment and
+justification of dependencies. Reference [9], cited for a hash
+second-preimage argument on p. 20, is a paper about KeeLoq rather than
+the claimed hash result. The unsupported numerical claims and
+mis-citation should be corrected, not used as security evidence.</p>
+<p>There are also positive mathematical checks. Both Sigma maps have
+rank 64 over GF(2). Representing rotation by <code>x</code>, the word
+modulus is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>64</mn></msup><mo>+</mo><mn>1</mn><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>+</mo><mn>1</mn><msup><mo stretchy="false" form="postfix">)</mo><mn>64</mn></msup></mrow><annotation encoding="application/x-tex">x^{64}+1=(x+1)^{64}</annotation></semantics></math>;
+each three-term Sigma polynomial takes value 1 at <code>x = 1</code>, so
+it is coprime to that modulus and invertible. Sage independently
+confirmed the gcds and one-dimensional fixed spaces. These facts do not
+rely on one rotation amount being prime. They establish linear-map
+properties, not differential probabilities through modular
+additions.</p>
+<p>The SubColumn inverse in §4.5.2 is algebraically consistent with the
+forward equations, and 10,000 deterministic random 256-bit inputs passed
+a forward/inverse check. The algebraic inverse, together with invertible
+row shifts and XOR injections, establishes that the round composition
+before feedforward is a permutation for fixed message and tweak. There
+is no rank defect in either Sigma map. The probability-one component
+differentials acknowledged by the specification remain relevant to
+security analysis, but their existence alone does not establish a
+full-hash weakness. No independent exhaustive differential search or
+full-round attack construction was performed here.</p>
+<p>The generic-security discussion should distinguish the variants. Only
+the 1,024-bit output version has a chaining state equal in width to the
+digest. The 512- and 768-bit versions retain a 1,024-bit state
+internally. A collision in a truncated output is not necessarily an
+internal-state collision, so generic multicollision and herding costs
+cannot be transferred between these cases merely by substituting the
+digest length. The fixed-salt HAIFA analysis also retains qualifications
+concerning multicollisions and herding; an unqualified claim of
+inheriting all HAIFA protections is too broad.</p>
+<h2 id="classical-and-quantum-claims">Classical and quantum claims</h2>
+<p>Table 4.1 explicitly labels its claims as classical. Under ideal
+behavior, its collision and preimage exponents are the usual ones for
+the three output lengths; their achievement by FEILIAN is what remains
+unestablished. The generic quantum query scales are different:</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<table style="width:100%;">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: right;">Digest bits</th>
+<th style="text-align: right;">Classical collision exponent</th>
+<th style="text-align: right;">Classical preimage exponent</th>
+<th style="text-align: right;">Generic quantum collision exponent</th>
+<th style="text-align: right;">Generic quantum preimage exponent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">about 170.7</td>
+<td style="text-align: right;">256</td>
+</tr>
+<tr>
+<td style="text-align: right;">768</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">768</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">384</td>
+</tr>
+<tr>
+<td style="text-align: right;">1,024</td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">1,024</td>
+<td style="text-align: right;">about 341.3</td>
+<td style="text-align: right;">512</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The quantum columns use the usual idealized collision-search and
+preimage-search query models, from <a href="https://arxiv.org/abs/quant-ph/9705002">Brassard–Høyer–Tapp</a>
+and <a href="https://arxiv.org/abs/quant-ph/9605043">Grover</a>. They
+are not practical gate-count or memory estimates and are not newly
+discovered attacks on FEILIAN. The specification’s claim that there is
+no better dedicated quantum method needs analysis of the actual
+construction; a classical simulator proof does not establish it. In
+particular, the 512/1,024-bit classical claim should not be restated as
+that many bits of quantum security.</p>
+<h1 id="r7.-mac-kdf-xof-and-interface-composition">R7. MAC, KDF, XOF and
+interface composition</h1>
+<p>The claim that the preceding indifferentiability discussion licenses
+general replacement of a random oracle is too broad even before the
+proof defects are considered. <a href="https://eprint.iacr.org/2011/339.pdf">Ristenpart, Shacham, and
+Shrimpton</a> show why ordinary indifferentiability does not
+automatically cover all security notions with multiple adversarial
+stages.</p>
+<p>For the proposed prefix MAC, finalization is a sensible defense
+against ordinary length extension, but collision resistance alone does
+not prove MAC security. A useful bound must include key entropy, tag
+length, query counts, total processed data, and the allowed interfaces.
+A claim of 512-bit MAC security cannot hold independently of those
+parameters. A vetted MAC construction would still require a sound
+assumption about FEILIAN and a correct implementation.</p>
+<p>Tag collisions among already queried messages are not fresh-message
+MAC forgeries. For an ideal random-function MAC with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-bit
+tags, the generic verification-guessing contribution is bounded by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mi>v</mi></msub><mi>/</mi><msup><mn>2</mn><mi>t</mi></msup></mrow><annotation encoding="application/x-tex">q_v/2^t</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>q</mi><mi>v</mi></msub><annotation encoding="application/x-tex">q_v</annotation></semantics></math>
+counts verification attempts. A PRF-based argument adds the relevant
+distinguishing advantage; see <a href="https://www.cs.ucdavis.edu/~rogaway/classes/227/spring05/book/main.pdf#page=167">Bellare–Rogaway,
+Proposition 7.3</a>. The
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>2</mn><mrow><mi>t</mi><mi>/</mi><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">2^{t/2}</annotation></semantics></math>
+birthday scale for tag collisions does not, by itself, reduce the
+generic forgery exponent to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">t/2</annotation></semantics></math>.
+This distinction does not supply the missing proof for FEILIAN’s actual
+prefix MAC.</p>
+<p>For the KDF, <code>PRK = FEILIAN(IKM)</code> does not establish a
+general extractor for arbitrary non-uniform sources. A deterministic
+function cannot guarantee uniformly distributed output for every
+high-entropy source; a random-oracle argument requires suitable
+independence, secrecy, and entropy conditions. Hashing does not create
+entropy. The proposed expansion also needs an unambiguous encoding of
+context and counter, an output limit, and explicit separation from other
+uses of the same secret. A fixed-length PRK and a fixed, known-width
+trailing counter give unambiguous parsing even when <code>info</code> is
+variable-length: the counter is the final fixed-width field. Specify its
+injective encoding, byte order, allowed iteration range starting at one
+and overflow rejection. A variable-width alternative needs its own
+unambiguous framing. The specification gap does not imply that every
+possible encoding is ambiguous. Calling PRK a salt is misleading: in
+that expression it serves as secret key material. This is not HKDF,
+whose extract step is HMAC-based and whose salt and context handling are
+specified in <a href="https://www.rfc-editor.org/rfc/rfc5869.html">RFC
+5869</a>.</p>
+<p>For the XOF, the distinct squeezing version values are a useful
+design choice. However, the mode changes the finalization rule during
+absorption and then applies compression to an internal root; it is not
+the hash mode analyzed in §4.3.1. It needs its own definition and proof.
+Specify the empty-block encoding, counter word order and bound, the
+output truncation for each variant, the initial root for an empty input,
+and behavior on counter exhaustion. A finite 128-bit counter cannot
+silently be allowed to wrap while retaining the claim that every squeeze
+call is distinct. No MAC/KDF/XOF implementation or corresponding KATs
+were present.</p>
+<p>Keyed applications create additional implementation requirements. In
+1SC, 2SC, and 4SC, the digest signal is continuously derived from the
+current chaining register, and the top-level MMIO read path is not
+restricted to completed hashes. Message registers are readable too.
+Whether this crosses a security boundary depends on who can access the
+peripheral; it is not an additional public-hash vulnerability by itself.
+It does mean the supplied public-hash interface must not be assumed to
+keep a secret prefix or intermediate keyed state isolated. Similarly, C
+heap copies of keyed inputs are freed without explicit erasure. A keyed
+API should define state exposure and clearing rather than inherit them
+accidentally.</p>
+<p>The scalar and SIMD ARX arithmetic has fixed operation schedules and
+no obvious message-dependent branches or memory indices. That is
+favorable source-level evidence for timing behavior on the intended
+platforms. No machine-code timing certification, leakage measurement,
+fault analysis, or secret-state isolation validation was performed, so
+these are not established properties of a deployable MAC or KDF.</p>
+<h1 id="r8.-shared-drng-and-test-driver-assurance">R8. Shared DRNG and
+test-driver assurance</h1>
+<p>The six <code>drng.c</code> files supplied with FEILIAN are
+byte-identical, as recorded in <a href="data/shared_drng.json">shared_drng.json</a>. Its header attributes
+the software to ICCS, and the <a href="data/SOURCES.md#source-15">submission README</a> marks the KAT
+generator and DRNG files as unmodifiable submission infrastructure.
+These observations support treating the defects below as a shared
+test-infrastructure issue and coordinating an upstream correction with
+the organizers. They are not defects in FEILIAN’s compression
+mathematics.</p>
+<p>The <a href="data/SOURCES.md#source-10">SM3 rotation macro</a>, at
+line 36, allows a shift by the word width when the rotation count is
+zero. The SM3 round calls at lines 90 and 94 reach that case. With
+32-bit <code>unsigned int</code>, this is undefined behavior under C’s
+shift rules, regardless of whether a particular processor masks its
+machine-instruction shift count. Use defined 32-bit rotation semantics
+for every permitted count; see <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf">C11
+draft N1570, §6.5.7 paragraph 3</a>.</p>
+<p>Error propagation is also incomplete.
+<code>SM3_DRNG_Instantiate</code> ignores both <code>SM3_df</code>
+return values at lines 252 and 257, and the <a href="data/SOURCES.md#source-14">KAT driver</a> ignores the
+initialization status at lines 296, 379, 487 and 601. The failed state
+is <strong>not necessarily all zero</strong>. Failure of the outer
+allocation follows a context clear; an inner derivation failure can
+leave seed material or a padded state copied into the context before
+success is returned. The result depends on the failing stage and input.
+Propagate every initialization/derivation failure and stop generation
+before recording purported test vectors.</p>
+<p>The partial-byte mask used by the generator is consistent with its
+retained-bit count; it is not an additional mask defect. The accepted
+seed-pointer contract should also be explicit: if a null pointer with
+zero length is supported, avoid passing it to <code>memcpy</code>; C’s
+library pointer requirements still apply at zero length (§7.24.1
+paragraph 2). The supplied normal KAT initialization passes a real seed
+array, so this is conditional API hardening, not a demonstrated
+normal-input failure.</p>
+<p>These conclusions are static. No sanitizer run or allocation-failure
+experiment from the second review is claimed as independently
+reproduced. They affect the portability and reliability of regenerating
+vectors. They do <strong>not</strong> invalidate the already supplied
+message/digest pairs or the 24,582 comparisons performed here, which
+hash fixed KAT message bytes directly and do not execute the DRNG.
+Preserve those records while correcting and independently checking the
+generator.</p>
+<h1 id="validation-and-limits">Validation and limits</h1>
+<p>The <a href="run.py">verification driver</a> can build the six
+supplied C sources from a separately obtained, hash-verified submission
+and checks canonical inputs only. The <a href="evidence/c_conformance.json">C conformance record</a> and <a href="evidence/quick.json">model record</a> contain the results and
+complete ordinary-example digests. The <a href="code/check_appendix.py">appendix check</a> verifies the six
+printed examples under their identified count conventions, all 45 round
+snapshots, nine initial states and nine recovered domains. The <a href="code/arithmetic_checks.sage">Sage checks</a> perform exact
+polynomial and constant calculations, with a separate <a href="evidence/arithmetic.json">arithmetic record</a>. The <a href="data/rtl_source_facts.json">RTL source index</a> identifies the
+relevant counter and variant locations; <a href="data/SOURCES.md">source
+locators</a> also cover the hardware interface and shared test
+generator. Their source observations are not executable hardware or
+failure-path tests.</p>
+<p>The package provides a self-contained Python check of ordinary
+examples and component arithmetic, plus an optional check against the
+supplied C sources and published short-message KATs. See <a href="REPRODUCING.md">REPRODUCING.md</a> for commands, dependencies and
+coverage. The latter path verifies all 74 original file hashes before
+compilation. Original submission files are not redistributed.</p>
+<p>The ordinary C tests passed. Compiler warnings concerned a validated
+positive output-length conversion and unused SIMD masks; those warnings
+were not treated as security findings. The long-message KAT sets
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>2</mn><mn>23</mn></msup><annotation encoding="application/x-tex">2^{23}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>2</mn><mn>33</mn></msup><annotation encoding="application/x-tex">2^{33}</annotation></semantics></math>)
+and million-iteration loop were not run. No software source was patched,
+no noncanonical bit-input or failure-path witness was exercised, and no
+HDL execution was performed. Passing these checks is evidence about
+specified computations and internal consistency, not a proof of
+security.</p>
+<h1 id="requested-corrections">Requested corrections</h1>
+<p>Request a corrected submission before spending substantial effort on
+full-round security claims. The immediate requests should be:</p>
+<ol type="1">
+<li>Designate one authoritative algorithm, settling the IV, AddConstant
+rows, state/byte order, counter word order, empty input, partial-bit
+convention, and all named output variants. Identify which exact
+definition produced each security experiment.</li>
+<li>Correct the RTL length binding and variant definitions, and provide
+end-to-end tests across all four architectures against an independently
+implemented model. Compression-only synthesis results do not validate
+message framing or digest presentation.</li>
+<li>Correct the C input-length checks, partial-byte handling, allocation
+error propagation, and output-length contract. Prefer a bounded-memory
+streaming interface with explicit counter-overflow behavior.</li>
+<li>Regenerate all appendix and KAT material from the designated version
+using true message-length binding, with independently checked
+intermediate states and a reproducible provenance record. Explain the
+mixed appendix counter conventions.</li>
+<li>Coordinate correction of the shared DRNG and KAT driver with the
+organizers: use defined rotations, propagate failures and independently
+check deterministic output across supported toolchains. Preserve
+existing vectors for comparison.</li>
+<li>Replace the mode proof with one for the actual interface and obtain
+independent review of the complete message/tweak/state composition.
+State separately what is proved in an ideal model, what is
+experimentally supported, and what remains conjectural. MAC, KDF, and
+XOF recommendations need their own specifications and bounds.</li>
+</ol>
+<p>The hardware encoding defect is the strongest concrete reason to stop
+use of the affected implementations now. The inconsistent algorithm
+definitions and unsupported security margins are the strongest reasons
+to withhold confidence in the submission as a whole. They justify a hold
+and a corrected review target; they do not justify claiming that this
+review has broken the full-round, correctly encoded software hash.</p>
+<h1 id="references">References</h1>
+<ol type="1">
+<li><p>Lei Wang, Ling Song, Yaobin Shen, Kaixuan Wang, Zicheng Shi and
+Xin Yi. <em>FEILIAN algorithm specification</em>, 30 June 2026. The
+supplied 68-page PDF is identified by its digest above and in <a href="data/input_manifest.json">the input manifest</a>. Printed page
+numbering is used throughout.</p></li>
+<li><p>Markku-Juhani O. Saarinen. <em>FEILIAN (hash-10)</em>, 23
+September 2026. <a href="https://ngcc.dev/reports/hash-10.html">Public
+report</a>, consulted 24 September 2026.</p></li>
+<li><p>Eli Biham and Orr Dunkelman. <em>A Framework for Iterative Hash
+Functions — HAIFA</em>. IACR ePrint 2007/278. <a href="https://eprint.iacr.org/2007/278.pdf">Paper</a>.</p></li>
+<li><p>John Black, Phillip Rogaway and Thomas Shrimpton. <em>Black-Box
+Analysis of the Block-Cipher-Based Hash-Function Constructions from
+PGV</em>. CRYPTO 2002. <a href="https://www.cs.ucdavis.edu/~rogaway/papers/hash.pdf">Author-hosted
+paper</a>.</p></li>
+<li><p>NIST. <em>Decision to Revise NIST SP 800-22 Rev. 1a</em>, 19
+April 2022. <a href="https://www.nist.gov/news-events/news/2022/04/decision-revise-nist-sp-800-22-rev-1a">Notice</a>.</p></li>
+<li><p>Lov K. Grover. <em>A Fast Quantum Mechanical Algorithm for
+Database Search</em>. 1996. <a href="https://arxiv.org/abs/quant-ph/9605043">Paper</a>.</p></li>
+<li><p>Gilles Brassard, Peter Høyer and Alain Tapp. <em>Quantum
+Cryptanalysis of Hash and Claw-Free Functions</em>. 1997. <a href="https://arxiv.org/abs/quant-ph/9705002">Paper</a>.</p></li>
+<li><p>Thomas Ristenpart, Hovav Shacham and Thomas Shrimpton.
+<em>Careful with Composition: Limitations of the Indifferentiability
+Framework</em>. EUROCRYPT 2011. <a href="https://eprint.iacr.org/2011/339.pdf">Paper</a>.</p></li>
+<li><p>Hugo Krawczyk and Pasi Eronen. <em>HMAC-based Extract-and-Expand
+Key Derivation Function (HKDF)</em>. RFC 5869, May 2010. <a href="https://www.rfc-editor.org/rfc/rfc5869.html">RFC</a>.</p></li>
+<li><p>ISO/IEC JTC1/SC22/WG14. <em>N1570: Committee Draft, Programming
+Languages — C</em>, 12 April 2011. §§6.5.7 and 7.24.1. <a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf">Draft</a>.</p></li>
+<li><p>Mihir Bellare and Phillip Rogaway. <em>Introduction to Modern
+Cryptography</em>, course notes, 2005. Proposition 7.3. <a href="https://www.cs.ucdavis.edu/~rogaway/classes/227/spring05/book/main.pdf#page=167">Author-hosted
+notes</a>.</p></li>
+</ol>
+<p>The original text of this report is licensed under CC BY 4.0. See <a href="LICENSING.md">LICENSING.md</a> for software terms and third-party
+exceptions.</p>
+</body>
+</html>

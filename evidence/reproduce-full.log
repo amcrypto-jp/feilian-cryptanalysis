@@ -1,0 +1,13 @@
+Quick checks: 9 ordinary examples in each of 2 profiles; 10000 inverse checks; ranks 64, 64.
+Appendix B: 1024, abc: true count; all printed states agree.
+Appendix B: 1024, a_times_129: true count; all printed states agree.
+Appendix B: 768, abc: padded count; all printed states agree.
+Appendix B: 768, a_times_129: padded count; all printed states agree.
+Appendix B: 512, abc: padded count; all printed states agree.
+Appendix B: 512, a_times_129: padded count; all printed states agree.
+Appendix B: 6 digests, 9 initial states, 45 round snapshots and 9 domains verified.
+Original file hashes verified: 74. SIMD enabled: True.
+512: scalar 4097/4097; SIMD 4097/4097; model 20/20.
+768: scalar 4097/4097; SIMD 4097/4097; model 20/20.
+1024: scalar 4097/4097; SIMD 4097/4097; model 20/20.
+Requested checks completed successfully. Results are in the chosen output directory.

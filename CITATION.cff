@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying report. Version/date identify the prepared package; no DOI or public release URL has been assigned here."
+title: "FEILIAN: technical assessment of the submitted specification and implementations"
+authors:
+  - family-names: "IDRASSI"
+    given-names: "Mounir"
+    email: "mounir@amcrypto.jp"
+version: 1.0.0
+license: MIT
+preferred-citation:
+  type: report
+  authors:
+    - family-names: "IDRASSI"
+      given-names: "Mounir"
+      email: "mounir@amcrypto.jp"
+  title: "FEILIAN: technical assessment of the submitted specification and implementations"
+  version: 1.0.0
+  year: 2026
+  month: 9
+  filename: REPORT.pdf
+  license: CC-BY-4.0
+keywords:
+  - cryptography
+  - FEILIAN
+  - hash functions
+  - conformance
+  - hardware security
+  - reproducibility

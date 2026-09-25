@@ -1,0 +1,11 @@
+CryptHash_AlgorithmInstance.c: In function ‘CryptHash’:
+CryptHash_AlgorithmInstance.c:435:30: warning: conversion to ‘unsigned int’ from ‘int’ may change the sign of the result [-Wsign-conversion]
+  435 |         unsigned int shift = 8 - (digest_len_bits % 8);
+      |                              ^
+CryptHash_AlgorithmInstance.c: At top level:
+CryptHash_AlgorithmInstance.c:63:30: warning: ‘rot16_mask’ defined but not used [-Wunused-const-variable=]
+   63 | ALIGN32 static const uint8_t rot16_mask[32] ALIGN32_ATTR = {
+      |                              ^~~~~~~~~~
+CryptHash_AlgorithmInstance.c:59:30: warning: ‘rot24_mask’ defined but not used [-Wunused-const-variable=]
+   59 | ALIGN32 static const uint8_t rot24_mask[32] ALIGN32_ATTR = {
+      |                              ^~~~~~~~~~
