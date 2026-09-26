@@ -1,0 +1,35 @@
+{
+  "description": "Supplementary AI-generated analysis and verification material supplied by Mounir IDRASSI.",
+  "status": "Input to critical assessment, not an endorsement or complete reproduction of its claims.",
+  "accepted_contributions": [
+    "Appendix B counter explanation",
+    "Qualified hardware interface observations",
+    "Shared DRNG/test-driver issues"
+  ],
+  "files": {
+    "NEW_FINDINGS.md": {
+      "sha256": "cc8cb5ad0bc51e4017ffea27d6e380e99be4e7ce9c080389628ae579920a2afa",
+      "bytes": 17612
+    },
+    "README.md": {
+      "sha256": "aa6a2ca392ca23be5e0885c0f2eafcea468e42828830b8861f23691b44eb1501",
+      "bytes": 647
+    },
+    "check_appendix_counter.py": {
+      "sha256": "e658290bf379dc930fa65c1131d1a4b0acbc8025e7ad9a1c62bc22736f16ac5d",
+      "bytes": 2490
+    },
+    "final_verify.py": {
+      "sha256": "7510a5ae3662fbb76cf80cca235d841d30fe54ce1d672f77850a2095d5162a03",
+      "bytes": 4644
+    },
+    "model.py": {
+      "sha256": "7a48e50e0c75640234474466e5cb6d32c89eb5616015be5a0a1e599298fabaee",
+      "bytes": 3275
+    }
+  },
+  "redistribution": "The supplied DeepSeek-generated analysis and scripts are not redistributed in this package.",
+  "model": "deepseek-v4.1-flash",
+  "model_identity_source": "Author clarification on 26 September 2026.",
+  "assessment_assistance": "OpenAI Codex (GPT-6 Astra)"
+}

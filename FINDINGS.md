@@ -34,7 +34,4 @@ was consulted before this work. Its finding `hash-10-1` concerns silent
 allocation failure in the three reference implementations. R5 extends its
 implementation coverage by static inspection. The other findings are additional
 relative to that report as consulted on 24 September; exhaustive priority or
-novelty is not claimed. The second reviewer is credited for the R3 explanation
-and for raising the additional hardware and shared-DRNG issues accepted after
-checking. Acceptance of those observations is not endorsement of every claim
-in that privately supplied review.
+novelty is not claimed. The R3 explanation and additional hardware and shared-DRNG observations were accepted from supplementary AI-generated analysis after critical checking. Acceptance of those observations does not endorse every claim in that material. [AI_DISCLOSURE.md](AI_DISCLOSURE.md) identifies GPT-6 Astra and deepseek-v4.1-flash and describes their respective roles.

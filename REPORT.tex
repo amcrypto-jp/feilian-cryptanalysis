@@ -79,7 +79,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small\sffamily FEILIAN technical assessment}
-\fancyhead[R]{\small\sffamily Version 1.0.0}
+\fancyhead[R]{\small\sffamily Version 1.0.1}
 \fancyfoot[L]{\footnotesize\sffamily Mounir IDRASSI}
 \fancyfoot[R]{\footnotesize\sffamily\thepage}
 \setlength{\headheight}{15pt}
@@ -117,10 +117,10 @@ implementations}
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{Cryptographic review · Version 1.0.0}
+\subtitle{Cryptographic review · Version 1.0.1}
 \author{Mounir IDRASSI
 (\href{mailto:mounir@amcrypto.jp}{\nolinkurl{mounir@amcrypto.jp}})}
-\date{24 September 2026}
+\date{26 September 2026}
 
 \begin{document}
 \maketitle
@@ -151,22 +151,22 @@ implementations. R5 extends that source-level observation to the
 optimized implementations; it is not presented as an independently
 discovered original finding. R1--R4 and R6--R8 describe additional
 observations relative to that report as consulted on 24 September; no
-exhaustive novelty claim is made. A second researcher subsequently
-supplied a private review. That researcher is credited for the Appendix
-B counter explanation and for raising the additional hardware and
-shared-DRNG issues incorporated after critical checking. The second
-review is not endorsed as a whole; its broader experimental claims are
-not included in this report's verified coverage. The
-\href{PROVENANCE.md}{provenance record} identifies the reviewed files
-and the limits of verification.
+exhaustive novelty claim is made. Supplementary AI-generated analysis
+contributed the Appendix B counter explanation and additional hardware
+and shared-DRNG observations, which were critically checked before
+incorporation. Its broader experimental claims are not included in this
+report's verified coverage. The \href{PROVENANCE.md}{provenance record}
+identifies the reviewed files and the limits of verification.
 
-\textbf{AI-use disclosure.} OpenAI Codex assisted with source and
-specification analysis, mathematical checks, verification code and
-publication preparation. The executable coverage and the static
-conclusions are reported separately. This package is prepared for Mounir
-IDRASSI's review and possible release; preparation does not assert that
-he has independently verified every conclusion. See
-\url{AI_DISCLOSURE.md}.
+\textbf{AI-use disclosure.} OpenAI Codex (GPT-6 Astra) assisted with
+source and specification analysis, mathematical checks, verification
+code and publication preparation. deepseek-v4.1-flash generated
+supplementary analysis and verification material supplied by the author;
+selected observations were critically checked before incorporation. Both
+are AI language models, and their use does not establish independent
+human peer review. Executed checks and static conclusions are reported
+separately. Mounir IDRASSI is responsible for the final report and its
+conclusions. See \url{AI_DISCLOSURE.md}.
 
 \clearpage
 
@@ -453,10 +453,10 @@ covering partial bytes and block boundaries, and all nine additional
 ordinary example computations. Those C implementations use the
 cumulative true message length.
 
-The second reviewer identified an exact explanation for the four
-previously unexplained Appendix B mismatches. Keeping the C IV, round
-operations, version selection, high-word-first counter and digest
-serialization, the following counts reproduce every printed example:
+The four previously unexplained Appendix B mismatches have an exact
+counter explanation. Keeping the C IV, round operations, version
+selection, high-word-first counter and digest serialization, the
+following counts reproduce every printed example:
 
 \Needspace{7\baselineskip}
 
@@ -944,11 +944,11 @@ array, so this is conditional API hardening, not a demonstrated
 normal-input failure.
 
 These conclusions are static. No sanitizer run or allocation-failure
-experiment from the second review is claimed as independently
-reproduced. They affect the portability and reliability of regenerating
-vectors. They do \textbf{not} invalidate the already supplied
-message/digest pairs or the 24,582 comparisons performed here, which
-hash fixed KAT message bytes directly and do not execute the DRNG.
+experiment from the supplementary AI-generated material is claimed as
+independently reproduced. They affect the portability and reliability of
+regenerating vectors. They do \textbf{not} invalidate the already
+supplied message/digest pairs or the 24,582 comparisons performed here,
+which hash fixed KAT message bytes directly and do not execute the DRNG.
 Preserve those records while correcting and independently checking the
 generator.
 

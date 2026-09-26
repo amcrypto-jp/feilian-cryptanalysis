@@ -1,16 +1,16 @@
 ---
 title: "FEILIAN: technical assessment of the submitted specification and implementations"
-subtitle: "Cryptographic review · Version 1.0.0"
+subtitle: "Cryptographic review · Version 1.0.1"
 author: "Mounir IDRASSI ([mounir@amcrypto.jp](mailto:mounir@amcrypto.jp))"
-date: "24 September 2026"
+date: "26 September 2026"
 lang: en
 ---
 
 **Abstract.** This review examines the FEILIAN hash submission dated 30 June 2026, including its specification, six C implementations, four RTL architectures and validation material. Static analysis identifies a message-length binding defect in the 1SC, 4SC and 8SC hardware wrappers; the 2SC counter path differs. The specification and implementations disagree on security-relevant details. All six Appendix B examples are exactly reproduced: the 512/768 examples use cumulative padded-block lengths, while the 1024 examples use actual message lengths. Verification covers all 45 printed round states and nine initial states. Ordinary tests pass all 24,582 C-to-KAT comparisons. Exact arithmetic confirms the Sigma maps' invertibility and intended constants. Shared test-generation code also has portability and error-propagation defects, distinct from the hash primitive. The security discussion does not establish the claimed composition, margin or application guarantees. No full-round cryptanalytic break of the correctly encoded software hash is established. A corrected, unambiguous submission and renewed independent review are recommended.
 
-**Prior work and preparation.** Markku-Juhani O. Saarinen's [FEILIAN report of 23 September 2026](https://ngcc.dev/reports/hash-10.html), credited there with AI assistance, was consulted before this review. It reports silent allocation failure in the reference C implementations. R5 extends that source-level observation to the optimized implementations; it is not presented as an independently discovered original finding. R1–R4 and R6–R8 describe additional observations relative to that report as consulted on 24 September; no exhaustive novelty claim is made. A second researcher subsequently supplied a private review. That researcher is credited for the Appendix B counter explanation and for raising the additional hardware and shared-DRNG issues incorporated after critical checking. The second review is not endorsed as a whole; its broader experimental claims are not included in this report’s verified coverage. The [provenance record](PROVENANCE.md) identifies the reviewed files and the limits of verification.
+**Prior work and preparation.** Markku-Juhani O. Saarinen's [FEILIAN report of 23 September 2026](https://ngcc.dev/reports/hash-10.html), credited there with AI assistance, was consulted before this review. It reports silent allocation failure in the reference C implementations. R5 extends that source-level observation to the optimized implementations; it is not presented as an independently discovered original finding. R1–R4 and R6–R8 describe additional observations relative to that report as consulted on 24 September; no exhaustive novelty claim is made. Supplementary AI-generated analysis contributed the Appendix B counter explanation and additional hardware and shared-DRNG observations, which were critically checked before incorporation. Its broader experimental claims are not included in this report’s verified coverage. The [provenance record](PROVENANCE.md) identifies the reviewed files and the limits of verification.
 
-**AI-use disclosure.** OpenAI Codex assisted with source and specification analysis, mathematical checks, verification code and publication preparation. The executable coverage and the static conclusions are reported separately. This package is prepared for Mounir IDRASSI's review and possible release; preparation does not assert that he has independently verified every conclusion. See [AI_DISCLOSURE.md](AI_DISCLOSURE.md).
+**AI-use disclosure.** OpenAI Codex (GPT-6 Astra) assisted with source and specification analysis, mathematical checks, verification code and publication preparation. deepseek-v4.1-flash generated supplementary analysis and verification material supplied by the author; selected observations were critically checked before incorporation. Both are AI language models, and their use does not establish independent human peer review. Executed checks and static conclusions are reported separately. Mounir IDRASSI is responsible for the final report and its conclusions. See [AI_DISCLOSURE.md](AI_DISCLOSURE.md).
 
 ## Assessment and scope
 
@@ -86,7 +86,7 @@ Reset and bus-handshake behavior also need an explicit integration contract. A d
 
 All six supplied C implementations passed every entry in their corresponding `KAT_2_12` file: 4,097 lengths, from 0 through 4,096 bits. That is 24,582 successful C-to-KAT comparisons. The independent Python model matched 20 selected KAT cases per version, covering partial bytes and block boundaries, and all nine additional ordinary example computations. Those C implementations use the cumulative true message length.
 
-The second reviewer identified an exact explanation for the four previously unexplained Appendix B mismatches. Keeping the C IV, round operations, version selection, high-word-first counter and digest serialization, the following counts reproduce every printed example:
+The four previously unexplained Appendix B mismatches have an exact counter explanation. Keeping the C IV, round operations, version selection, high-word-first counter and digest serialization, the following counts reproduce every printed example:
 
 | Variant | `abc`: final count (bits) | 129 bytes of `a`: first / final count (bits) | Matching convention |
 |---|---:|---:|---|
@@ -198,7 +198,7 @@ Error propagation is also incomplete. `SM3_DRNG_Instantiate` ignores both `SM3_d
 
 The partial-byte mask used by the generator is consistent with its retained-bit count; it is not an additional mask defect. The accepted seed-pointer contract should also be explicit: if a null pointer with zero length is supported, avoid passing it to `memcpy`; C's library pointer requirements still apply at zero length (§7.24.1 paragraph 2). The supplied normal KAT initialization passes a real seed array, so this is conditional API hardening, not a demonstrated normal-input failure.
 
-These conclusions are static. No sanitizer run or allocation-failure experiment from the second review is claimed as independently reproduced. They affect the portability and reliability of regenerating vectors. They do **not** invalidate the already supplied message/digest pairs or the 24,582 comparisons performed here, which hash fixed KAT message bytes directly and do not execute the DRNG. Preserve those records while correcting and independently checking the generator.
+These conclusions are static. No sanitizer run or allocation-failure experiment from the supplementary AI-generated material is claimed as independently reproduced. They affect the portability and reliability of regenerating vectors. They do **not** invalidate the already supplied message/digest pairs or the 24,582 comparisons performed here, which hash fixed KAT message bytes directly and do not execute the DRNG. Preserve those records while correcting and independently checking the generator.
 
 ## Validation and limits
 

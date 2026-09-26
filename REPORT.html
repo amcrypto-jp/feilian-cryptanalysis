@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc 3.11" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Mounir IDRASSI (mounir@amcrypto.jp)" />
-  <meta name="dcterms.date" content="2026-09-24" />
+  <meta name="dcterms.date" content="2026-09-26" />
   <title>FEILIAN: technical assessment of the submitted specification and implementations</title>
   <style>
 
@@ -73,9 +73,9 @@ tr, .math.display { break-inside: avoid; }
 <header id="title-block-header">
 <h1 class="title">FEILIAN: technical assessment of the submitted
 specification and implementations</h1>
-<p class="subtitle">Cryptographic review · Version 1.0.0</p>
+<p class="subtitle">Cryptographic review · Version 1.0.1</p>
 <p class="author">Mounir IDRASSI (<a href="mailto:mounir@amcrypto.jp">mounir@amcrypto.jp</a>)</p>
-<p class="date">24 September 2026</p>
+<p class="date">26 September 2026</p>
 </header>
 <p><strong>Abstract.</strong> This review examines the FEILIAN hash
 submission dated 30 June 2026, including its specification, six C
@@ -102,19 +102,21 @@ the reference C implementations. R5 extends that source-level
 observation to the optimized implementations; it is not presented as an
 independently discovered original finding. R1–R4 and R6–R8 describe
 additional observations relative to that report as consulted on 24
-September; no exhaustive novelty claim is made. A second researcher
-subsequently supplied a private review. That researcher is credited for
-the Appendix B counter explanation and for raising the additional
-hardware and shared-DRNG issues incorporated after critical checking.
-The second review is not endorsed as a whole; its broader experimental
-claims are not included in this report’s verified coverage. The <a href="PROVENANCE.md">provenance record</a> identifies the reviewed files
+September; no exhaustive novelty claim is made. Supplementary
+AI-generated analysis contributed the Appendix B counter explanation and
+additional hardware and shared-DRNG observations, which were critically
+checked before incorporation. Its broader experimental claims are not
+included in this report’s verified coverage. The <a href="PROVENANCE.md">provenance record</a> identifies the reviewed files
 and the limits of verification.</p>
-<p><strong>AI-use disclosure.</strong> OpenAI Codex assisted with source
-and specification analysis, mathematical checks, verification code and
-publication preparation. The executable coverage and the static
-conclusions are reported separately. This package is prepared for Mounir
-IDRASSI’s review and possible release; preparation does not assert that
-he has independently verified every conclusion. See <a href="AI_DISCLOSURE.md">AI_DISCLOSURE.md</a>.</p>
+<p><strong>AI-use disclosure.</strong> OpenAI Codex (GPT-6 Astra)
+assisted with source and specification analysis, mathematical checks,
+verification code and publication preparation. deepseek-v4.1-flash
+generated supplementary analysis and verification material supplied by
+the author; selected observations were critically checked before
+incorporation. Both are AI language models, and their use does not
+establish independent human peer review. Executed checks and static
+conclusions are reported separately. Mounir IDRASSI is responsible for
+the final report and its conclusions. See <a href="AI_DISCLOSURE.md">AI_DISCLOSURE.md</a>.</p>
 <h1 id="assessment-and-scope">Assessment and scope</h1>
 <p><strong>Recommendation: withhold a positive security assessment and
 integration approval for this submission.</strong> There is a
@@ -141,7 +143,7 @@ SHA-256 is
 The <a href="data/input_manifest.json">input manifest</a> fingerprints
 all 74 original files. The archive digest on the public report was not
 checked against an original ZIP, which was not present here.</p>
-<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
 <table>
 <colgroup>
 <col style="width: 7%" />
@@ -284,7 +286,7 @@ deployment.</p>
 algorithm definitions</h1>
 <p>There are independent discrepancies, so correcting one typo is
 insufficient.</p>
-<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
 <table>
 <colgroup>
 <col style="width: 22%" />
@@ -360,7 +362,7 @@ code for the empty message, <code>abc</code>, and 129 repetitions of
 <code>a</code>, for every digest size. This is a conformance comparison
 on ordinary messages. For example, the first 16 digest bytes for
 FEILIAN-1024(<code>abc</code>) are:</p>
-<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
 <table>
 <colgroup>
 <col style="width: 43%" />
@@ -428,11 +430,11 @@ independent Python model matched 20 selected KAT cases per version,
 covering partial bytes and block boundaries, and all nine additional
 ordinary example computations. Those C implementations use the
 cumulative true message length.</p>
-<p>The second reviewer identified an exact explanation for the four
-previously unexplained Appendix B mismatches. Keeping the C IV, round
-operations, version selection, high-word-first counter and digest
-serialization, the following counts reproduce every printed example:</p>
-<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<p>The four previously unexplained Appendix B mismatches have an exact
+counter explanation. Keeping the C IV, round operations, version
+selection, high-word-first counter and digest serialization, the
+following counts reproduce every printed example:</p>
+<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
 <table>
 <colgroup>
 <col style="width: 22%" />
@@ -718,7 +720,7 @@ inheriting all HAIFA protections is too broad.</p>
 behavior, its collision and preimage exponents are the usual ones for
 the three output lengths; their achievement by FEILIAN is what remains
 unestablished. The generic quantum query scales are different:</p>
-<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
+<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
 <table style="width:100%;">
 <colgroup>
 <col style="width: 12%" />
@@ -883,13 +885,13 @@ paragraph 2). The supplied normal KAT initialization passes a real seed
 array, so this is conditional API hardening, not a demonstrated
 normal-input failure.</p>
 <p>These conclusions are static. No sanitizer run or allocation-failure
-experiment from the second review is claimed as independently
-reproduced. They affect the portability and reliability of regenerating
-vectors. They do <strong>not</strong> invalidate the already supplied
-message/digest pairs or the 24,582 comparisons performed here, which
-hash fixed KAT message bytes directly and do not execute the DRNG.
-Preserve those records while correcting and independently checking the
-generator.</p>
+experiment from the supplementary AI-generated material is claimed as
+independently reproduced. They affect the portability and reliability of
+regenerating vectors. They do <strong>not</strong> invalidate the
+already supplied message/digest pairs or the 24,582 comparisons
+performed here, which hash fixed KAT message bytes directly and do not
+execute the DRNG. Preserve those records while correcting and
+independently checking the generator.</p>
 <h1 id="validation-and-limits">Validation and limits</h1>
 <p>The <a href="run.py">verification driver</a> can build the six
 supplied C sources from a separately obtained, hash-verified submission

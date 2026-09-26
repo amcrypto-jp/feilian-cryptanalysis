@@ -18,13 +18,13 @@ in all its supplied formats, the original documentation, publication drafts,
 metadata, and original analysis/result records in `data/` and `evidence/`.
 The full license is [LICENSES/CC-BY-4.0.txt](LICENSES/CC-BY-4.0.txt).
 Suggested attribution: “Mounir IDRASSI, FEILIAN: technical assessment of the
-submitted specification and implementations, version 1.0.0, 24 September 2026.”
+submitted specification and implementations, version 1.0.1, 26 September 2026.”
 
 ## Third-party material
 
 No license here purports to relicense the FEILIAN submission, Saarinen's report,
 referenced papers, fonts, document-building dependencies or pre-existing website
-assets, or the privately supplied second review. Original submission PDFs, source trees and KAT collections are excluded
+assets, or the privately supplied AI-generated analysis and scripts. Original submission PDFs, source trees and KAT collections are excluded
 from this package. Short source observations, algorithm constants and example
 digests and numeric intermediate states are included only as technical evidence and remain subject to any
 applicable third-party rights. Factual values and file hashes do not acquire
