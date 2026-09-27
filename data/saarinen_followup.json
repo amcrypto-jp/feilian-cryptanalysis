@@ -1,0 +1,146 @@
+{
+  "record_type": "Secondary publication on Saarinen's independent personal site",
+  "consulted_date": "2026-09-27",
+  "report": {
+    "url": "https://ngcc.dev/reports/hash-10.html",
+    "retrieved_at": "2026-09-27T02:59:16.342908+00:00",
+    "bytes": 16133,
+    "sha256": "5f79d4256d88ec400021fd5b4a637016fcc199b16392c2acaa9bd05c48056b1d"
+  },
+  "entries": [
+    {
+      "id": "hash-10-1",
+      "review_ids": [
+        "R5"
+      ],
+      "issue": 21,
+      "url": "https://ngcc.dev/reports/hash-10.html#hash-10-1-padding-allocation-failure-returns-a-successful-all-zero-digest",
+      "entry_date": "2026-09-23",
+      "credit": "Markku-Juhani O. Saarinen markku-juhani.saarinen@tuni.fi , with AI assistance; optimized scope verified by Mounir Idrassi mounir@amcrypto.jp",
+      "reported_evidence": "Source inspection extends the existing allocation-failure finding to optimized C.",
+      "site_severity": "Low",
+      "site_status": "Confirmed",
+      "site_scope": "implementation"
+    },
+    {
+      "id": "hash-10-2",
+      "review_ids": [
+        "R1"
+      ],
+      "issue": 18,
+      "url": "https://ngcc.dev/reports/hash-10.html#hash-10-2-three-feilian-rtl-cores-have-trivial-zero-extension-collisions",
+      "entry_date": "2026-09-26",
+      "credit": "Mounir Idrassi mounir@amcrypto.jp",
+      "reported_evidence": "Saarinen's page reports RTL simulations for 1SC, 4SC and 8SC, with 2SC as a control.",
+      "site_severity": "Critical",
+      "site_status": "Confirmed",
+      "site_scope": "implementation"
+    },
+    {
+      "id": "hash-10-3",
+      "review_ids": [
+        "R2",
+        "R3"
+      ],
+      "issue": 19,
+      "url": "https://ngcc.dev/reports/hash-10.html#hash-10-3-the-specification-examples-and-rtl-define-incompatible-feilian-variants",
+      "entry_date": "2026-09-26",
+      "credit": "Mounir Idrassi mounir@amcrypto.jp",
+      "reported_evidence": "Specification/source comparison and the author's pinned v1.0.1 numerical checker.",
+      "site_severity": "Low",
+      "site_status": "Confirmed",
+      "site_scope": "design"
+    },
+    {
+      "id": "hash-10-4",
+      "review_ids": [
+        "R4"
+      ],
+      "issue": 20,
+      "url": "https://ngcc.dev/reports/hash-10.html#hash-10-4-c-implementations-hash-storage-bits-outside-partial-byte-messages",
+      "entry_date": "2026-09-26",
+      "credit": "Mounir Idrassi mounir@amcrypto.jp",
+      "reported_evidence": "Saarinen's page reports runtime checks on three reference C instances and source inspection of three optimized instances.",
+      "site_severity": "Low",
+      "site_status": "Confirmed",
+      "site_scope": "implementation"
+    },
+    {
+      "id": "hash-10-5",
+      "review_ids": [
+        "R4"
+      ],
+      "issue": 20,
+      "url": "https://ngcc.dev/reports/hash-10.html#hash-10-5-c-input-length-conversion-and-padding-arithmetic-are-unchecked",
+      "entry_date": "2026-09-26",
+      "credit": "Mounir Idrassi mounir@amcrypto.jp",
+      "reported_evidence": "Static inspection of length conversion and padding arithmetic; no memory-safety exploit demonstrated.",
+      "site_severity": "Info",
+      "site_status": "Confirmed",
+      "site_scope": "implementation"
+    }
+  ],
+  "issue_acknowledgments": [
+    {
+      "number": 18,
+      "url": "https://github.com/ngcc-dev/ngcc-harness/issues/18",
+      "state": "closed",
+      "closed_at": "2026-09-26T19:08:41Z",
+      "maintainer": "mjosaarinen",
+      "acknowledgment_url": "https://github.com/ngcc-dev/ngcc-harness/issues/18#issuecomment-5849034474"
+    },
+    {
+      "number": 19,
+      "url": "https://github.com/ngcc-dev/ngcc-harness/issues/19",
+      "state": "closed",
+      "closed_at": "2026-09-26T19:11:14Z",
+      "maintainer": "mjosaarinen",
+      "acknowledgment_url": "https://github.com/ngcc-dev/ngcc-harness/issues/19#issuecomment-5849052605"
+    },
+    {
+      "number": 20,
+      "url": "https://github.com/ngcc-dev/ngcc-harness/issues/20",
+      "state": "closed",
+      "closed_at": "2026-09-26T19:15:07Z",
+      "maintainer": "mjosaarinen",
+      "acknowledgment_url": "https://github.com/ngcc-dev/ngcc-harness/issues/20#issuecomment-5849080122"
+    },
+    {
+      "number": 21,
+      "url": "https://github.com/ngcc-dev/ngcc-harness/issues/21",
+      "state": "closed",
+      "closed_at": "2026-09-26T19:16:51Z",
+      "maintainer": "mjosaarinen",
+      "acknowledgment_url": "https://github.com/ngcc-dev/ngcc-harness/issues/21#issuecomment-5849093723"
+    }
+  ],
+  "harness_revision_cited_by_maintainer": {
+    "commit": "37ce9750cafd7ea0db0be255e4e8e02f10fe7841",
+    "url": "https://github.com/ngcc-dev/ngcc-harness/commit/37ce9750cafd7ea0db0be255e4e8e02f10fe7841"
+  },
+  "verification_scope": {
+    "performed_here": "Read the personal-site report and issue acknowledgments as secondary publication sources.",
+    "external_experiments_rerun": false,
+    "external_harness_audited": false,
+    "packaged_scientific_execution_records_changed": false,
+    "scope_limit": "The site entries concern the listed R1–R5 findings; they do not establish official competition endorsement or validate this review as a whole. The author's assessments and recorded evidence remain as stated in the report."
+  },
+  "site_identity": {
+    "name": "ngcc.dev",
+    "maintainer": "Markku-Juhani O. Saarinen",
+    "status": "Independent personal initiative; unaffiliated with NICCS",
+    "homepage": "https://ngcc.dev/",
+    "homepage_retrieval": {
+      "url": "https://ngcc.dev/",
+      "retrieved_at": "2026-09-27T03:20:31.565741+00:00",
+      "bytes": 3298,
+      "sha256": "034aba9674ddf20dddd6cfcfde43ca5c1ca8c31c48d01768eba5b187f2d7f478"
+    },
+    "role_in_review": "Secondary reference for prior work, republication and attributed follow-up reports. Site labels are not official competition assessments or this review's ratings."
+  },
+  "review_revision_cited_by_saarinen": {
+    "tag": "v1.0.1",
+    "commit": "16567114688adf5cae44d65f45d88ed308d0f893",
+    "repository": "https://github.com/amcrypto-jp/feilian-cryptanalysis"
+  }
+}

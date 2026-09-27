@@ -15,7 +15,7 @@ args = parser.parse_args()
 common = [args.pandoc, "REPORT.md", "--standalone",
           "--from=markdown+tex_math_single_backslash", "--shift-heading-level-by=-1",
           "--lua-filter=assets/layout.lua"]
-subprocess.run(common + ["--to=html5", "--mathml", "--embed-resources",
+subprocess.run(common + ["--to=html5", "--math-method=mathml", "--embed-resources",
                         "--css=assets/report.css", "--output=REPORT.html"],
                cwd=root, check=True)
 subprocess.run(common + ["--to=latex", "--output=REPORT.tex", "--pdf-engine=tectonic",

@@ -1,8 +1,9 @@
 # Findings and evidence levels
 
-These identifiers belong to this review. They are not assigned competition
-issue numbers, CVEs or acknowledgments by the submitters. The detailed
-reasoning and qualifications are in [REPORT.md](REPORT.md).
+R1–R8 are this review's identifiers. The ngcc.dev cross-references below are
+identifiers on Saarinen's personal reporting site. Neither set consists of
+official competition issue numbers or CVEs. The detailed reasoning and
+qualifications are in [REPORT.md](REPORT.md).
 
 | ID | Affected material | Finding and impact | Evidence | Requested correction |
 |---|---|---|---|---|
@@ -20,8 +21,8 @@ reasoning and qualifications are in [REPORT.md](REPORT.md).
 R1 concerns the message encoding performed by specific hardware wrappers,
 independently of the compression function's cryptanalytic strength. It should
 not be reported as a demonstrated break of the correctly encoded software hash.
-The source conclusion is strong, but no RTL execution or hardware measurement
-has been performed. The 2SC exception does not certify that implementation as
+The source conclusion is strong; no RTL execution or hardware measurement
+was performed in this review. The 2SC exception does not certify that implementation as
 fully conformant or secure; R2 still applies to the submission.
 
 R6 and R7 identify missing assurance and overbroad claims. A proof gap is not an
@@ -34,4 +35,37 @@ was consulted before this work. Its finding `hash-10-1` concerns silent
 allocation failure in the three reference implementations. R5 extends its
 implementation coverage by static inspection. The other findings are additional
 relative to that report as consulted on 24 September; exhaustive priority or
-novelty is not claimed. The R3 explanation and additional hardware and shared-DRNG observations were accepted from supplementary AI-generated analysis after critical checking. Acceptance of those observations does not endorse every claim in that material. [AI_DISCLOSURE.md](AI_DISCLOSURE.md) identifies GPT-6 Astra and deepseek-v4.1-flash and describes their respective roles.
+novelty is not claimed. The assistance used during this research, including checked DeepSeek contributions to R3 and hardware/test-generator observations, is described in [AI_DISCLOSURE.md](AI_DISCLOSURE.md).
+
+## Secondary publication record
+
+Saarinen's [ngcc.dev report](https://ngcc.dev/reports/hash-10.html) also publishes
+these findings, with entries dated 26 September 2026. The site is his independent
+personal initiative, unaffiliated with NICCS. The following table is a publication
+cross-reference; this review's assessments remain those given above.
+
+| Review finding | Site identifier | Submitted issue |
+|---|---|---|
+| R1 | `hash-10-2` | [18](https://github.com/ngcc-dev/ngcc-harness/issues/18) |
+| R2–R3 | `hash-10-3` | [19](https://github.com/ngcc-dev/ngcc-harness/issues/19) |
+| R4: partial bits | `hash-10-4` | [20](https://github.com/ngcc-dev/ngcc-harness/issues/20) |
+| R4: lengths | `hash-10-5` | [20](https://github.com/ngcc-dev/ngcc-harness/issues/20) |
+| R5: optimized-C extension | `hash-10-1` | [21](https://github.com/ngcc-dev/ngcc-harness/issues/21) |
+
+His page additionally reports RTL and reference-C partial-byte checks, with
+optimized-C coverage by source inspection. These reports were not independently
+reproduced here. Its severity and status labels are retained only as attributed
+site metadata in [data/saarinen_followup.json](data/saarinen_followup.json).
+
+## Component mathematics and scope
+
+The [mathematical appendix](SUBCOLUMN_STRUCTURES.md) proves the complete
+classification of constant whole-output SubColumn derivatives and the precise
+composition limit for the eight-dimensional matrix family. This supports R6
+without establishing a new hash vulnerability or full-round security bound.
+Structures outside that family and quantitative probability dependencies
+remain separate questions.
+
+The two §4.5.2 examples are identical valid relations. The repeated phase is
+already acknowledged in §4.6.2. The component and parallel-XOF descriptions
+clarify R6/R7 within the stated evidence limits.

@@ -5,6 +5,21 @@ The third-party sources and PDF are not included. The [input manifest](input_man
 records all 74 file hashes. Line numbers refer to those exact bytes, not to a later revision.
 The PDF has 68 pages; its viewer page number is one greater than its printed page number.
 
+
+## Obtain the exact source archive
+
+Download the [official FEILIAN Round 1 archive](https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/FEILIAN.zip) and check its SHA-256
+before extracting it. The archive was retrieved on 26 September 2026 and
+contains the 74 original files identified by this review.
+
+- Size: 46,405,040 bytes.
+- SHA-256: `876082a40ecf3b25d8b19478cbfeab4bd5f96ff7a293aacc5b57a9f73c2ff26c`.
+- [Archive identity and comparison record](source_archive.json).
+
+The member comparison was reconfirmed on 27 September 2026. Extract the
+`FEILIAN/` directory and supply it as `--submission-root` for the optional
+original-C checks. The checkers verify its files against `input_manifest.json`.
+
 <a id="source-1"></a>
 
 ## Specification.pdf

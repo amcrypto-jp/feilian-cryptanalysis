@@ -1,11 +1,11 @@
 cff-version: 1.2.0
-message: "Please cite the accompanying report. Version 1.0.1 is an AI-attribution correction prepared for release; no DOI is assigned."
+message: "Please cite the accompanying report. Version 1.0.2 is a technical-review and component-classification update prepared for release; no DOI is assigned."
 title: "FEILIAN: technical assessment of the submitted specification and implementations"
 authors:
   - family-names: "IDRASSI"
     given-names: "Mounir"
     email: "mounir@amcrypto.jp"
-version: 1.0.1
+version: 1.0.2
 license: MIT
 preferred-citation:
   type: report
@@ -14,7 +14,7 @@ preferred-citation:
       given-names: "Mounir"
       email: "mounir@amcrypto.jp"
   title: "FEILIAN: technical assessment of the submitted specification and implementations"
-  version: 1.0.1
+  version: 1.0.2
   year: 2026
   month: 9
   filename: REPORT.pdf

@@ -1,0 +1,12 @@
+{
+  "archive_url": "https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/FEILIAN.zip",
+  "archive_sha256": "876082a40ecf3b25d8b19478cbfeab4bd5f96ff7a293aacc5b57a9f73c2ff26c",
+  "archive_bytes": 46405040,
+  "retrieval_date": "2026-09-26",
+  "member_comparison_date": "2026-09-27",
+  "files_compared": 74,
+  "all_match": true,
+  "input_manifest": "input_manifest.json",
+  "input_manifest_sha256": "26e4e6815797a256b8798d8e19cfe3aae0ea7cced2553eae167dbc37d7a8ed74",
+  "scope": "The archive was obtained after the initial review. All 74 original member hashes match the existing review manifest; this establishes source identity and adds no new algorithm execution."
+}

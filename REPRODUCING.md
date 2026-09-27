@@ -48,7 +48,8 @@ the four remaining disagreements with the C convention.
 
 ## Full C and short KAT comparison
 
-Obtain the same FEILIAN submission separately and replace `/path/to/FEILIAN`
+Obtain the pinned official archive using the URL and checksum in
+[data/SOURCES.md](data/SOURCES.md), then replace `/path/to/FEILIAN`
 below with its extracted root, containing `Algorithm specifications`,
 `Implementations` and `Test_Vectors`.
 
@@ -110,13 +111,52 @@ DRNG copies supplied with FEILIAN. The generator and its failure paths are
 not executed by these checks; the C/KAT driver consumes fixed KAT message bytes
 directly. Reading supplied vectors and regenerating them are distinct checks.
 
-No hardware simulator, synthesis or device test was run. No allocation failure,
+In the included review executions, no hardware simulator, synthesis or device test was run. No allocation failure,
 noncanonical final-byte request, oversized length or 32-bit truncation case
 was executed. The long `2^23` and `2^33` KAT sets and million-iteration loop
 were not rerun. No full-round differential search, collision construction,
 side-channel measurement or MAC/KDF/XOF execution was performed. The package
 therefore verifies the ordinary computations and arithmetic described above;
 it does not turn all static findings into experimental demonstrations.
+
+## Secondary reports
+
+Saarinen's [personal FEILIAN report](https://ngcc.dev/reports/hash-10.html) also
+publishes these findings and describes his follow-up RTL and partial-byte
+checks. Those external reports are not part of `run.py` or the executions
+recorded in `evidence/`, and were not rerun for this release. His site is an
+independent initiative, unaffiliated with NICCS.
+
+[data/saarinen_followup.json](data/saarinen_followup.json) identifies the page,
+issue acknowledgments and cited harness revision, including his reference to
+the historical v1.0.1 checker. These links document secondary sources and their
+attribution; they do not certify this package or alter its recorded coverage.
+
+## Specification example check
+
+With the original hash-identified submission and pdftotext:
+
+~~~sh
+python3 code/check_specification_examples.py --submission-root /path/to/FEILIAN --output-dir verification-document
+~~~
+
+This reads the two §4.5.2 examples from printed p. 22. Both are (0,M,0,M) → (M,0,M,0). The recorded result is [evidence/specification_examples.json](evidence/specification_examples.json). It checks document content, not differential probabilities.
+
+## SubColumn classification and composition checks
+
+~~~sh
+python3 code/check_subcolumn_structures.py --output-dir verification-components
+~~~
+
+This uses the packaged model and standard library only. It checks exact Sigma ranks, arithmetic bit identities, the two-/three-input addition lemma at small widths (including its width-two exception), the full predicted difference maps and nonconstancy certificates. Positive finite samples do not prove the universal 64-bit theorem; read [SUBCOLUMN_STRUCTURES.md](SUBCOLUMN_STRUCTURES.md) for that proof.
+
+To add ordinary component comparisons with the hash-identified original scalar FEILIAN1024 C source on Linux with GCC:
+
+~~~sh
+python3 code/check_subcolumn_structures.py --submission-root /path/to/FEILIAN --output-dir verification-components-c
+~~~
+
+All 74 original file hashes are checked before compiling a temporary wrapper around the original component functions. The driver compares 1,029 SubColumn and 261 half-round evaluations. It does not patch submission files, run the DRNG or execute a hash attack. Expected results and the finite nonconstancy certificates are in [evidence/subcolumn_structures.json](evidence/subcolumn_structures.json). The checker uses explicit failure conditions that are not disabled by Python optimization.
 
 ## Rebuilding the documents
 

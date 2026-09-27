@@ -1,104 +1,100 @@
 # Provenance and scope
 
-Version 1.0.1 · attribution corrected 26 September 2026 · Mounir IDRASSI.
+Mounir IDRASSI · Version 1.0.2 · 27 September 2026
 
-## Reviewed target
+## Reviewed target and retrieval
 
-The review used a locally supplied FEILIAN directory containing 74 original
-files: specification and basic information PDFs, six C instances, four RTL
-architectures, test vectors and supporting material. The complete file inventory
-is [data/input_manifest.json](data/input_manifest.json). An inventory is not a
-claim that every file received equally deep analysis or that every test was run.
+The review initially used a local FEILIAN submission containing 74 files:
+specification and basic-information PDFs, six C instances, four RTL
+architectures, test vectors and supporting material. The exact file inventory
+is [data/input_manifest.json](data/input_manifest.json).
 
-The principal PDF is `Algorithm specifications/Specification.pdf`, dated
-30 June 2026, 642,596 bytes, 68 PDF pages. Its SHA-256 is:
+On 26 September 2026, the [official Round 1 archive](https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/FEILIAN.zip) was retrieved.
+All 74 original file hashes matched the existing review manifest. That
+comparison was reconfirmed against the stored archive on 27 September 2026.
+This subsequent check establishes the identity of the reviewed files; it does
+not represent a new execution of the conformance or security experiments.
 
-`8e3a9a109f3188ab57cbd0156c243f80a6453051cf98006dfef11d66bdeb5fa8`
+- Archive size: 46,405,040 bytes.
+- Archive SHA-256: `876082a40ecf3b25d8b19478cbfeab4bd5f96ff7a293aacc5b57a9f73c2ff26c`.
+- Retrieval and comparison record: [data/source_archive.json](data/source_archive.json).
+- File/line locators: [data/SOURCES.md](data/SOURCES.md).
 
-Printed page numbers are one less than the PDF viewer page numbers. The
-AddConstant diagram and boomerang inequality were visually inspected in
-rendered pages. The source locators refer to exact hashed files, not to an
-unidentified later version. All original file hashes remained unchanged after
-the review and package preparation.
+The principal specification is dated 30 June 2026, has 68 PDF pages and
+642,596 bytes, and is located at `Algorithm specifications/Specification.pdf`.
+Its SHA-256 is
+`8e3a9a109f3188ab57cbd0156c243f80a6453051cf98006dfef11d66bdeb5fa8`.
+Printed page numbers are one less than the PDF viewer page numbers.
+The AddConstant diagram and boomerang inequality were also visually inspected.
+All source references concern these identified bytes. The original submission
+and downloaded literature are obtained separately and are not redistributed.
 
-The public Saarinen report links to a competition archive. That archive was
-not the input used here, and its ZIP digest has not been independently verified.
-The per-file manifest identifies this review target; it does not assert archive
-identity. Third-party PDFs, complete sources and KAT files are not redistributed.
+## Prior work and attribution
 
-## Prior work and chronology
+I consulted Markku-Juhani O. Saarinen's
+[FEILIAN report](https://ngcc.dev/reports/hash-10.html), dated 23 September 2026,
+before this review. Its reference-C allocation-failure finding is prior work;
+R5 extends the static observation to optimized C. The original consultation
+record is [data/prior_report.json](data/prior_report.json). R1–R4 and R6–R8
+are additional observations relative to that report as consulted, without
+an exhaustive novelty claim.
 
-The user supplied the reference to Markku-Juhani O. Saarinen's
-[FEILIAN report](https://ngcc.dev/reports/hash-10.html) at the start of the review.
-The report, dated 23 September 2026 and credited there with AI assistance, was
-consulted before this analysis. It identifies silent allocation failure in
-the three reference C implementations as `hash-10-1`.
+The [mathematical appendix](SUBCOLUMN_STRUCTURES.md) is part of this review.
+It contains the concrete SubColumn classification and its composition limit.
+Its full classification is a proof claim, distinct from the finite component
+checks. [AI_DISCLOSURE.md](AI_DISCLOSURE.md) describes assistance used alongside
+my own research, including the checked DeepSeek contributions to the appendix
+counter explanation and hardware/test-generator observations.
 
-The present review was prepared on 24 September 2026. Static inspection extends
-that finding to optimized C as R5. The page was checked again during publication
-preparation; its retrieval metadata and digest are in
-[data/prior_report.json](data/prior_report.json). This package does not claim
-independent discovery of the known allocator defect. R1–R4 and R6–R8 are
-additional observations relative to that page as consulted, without an
-exhaustive prior-art or novelty claim.
+## Secondary publication on Saarinen's site
 
-Before publication, the author supplied supplementary analysis and verification files generated by deepseek-v4.1-flash. On 26 September 2026, he clarified the model identity and that this material was AI-generated. Its fingerprints and accepted contributions are in [data/ai_analysis.json](data/ai_analysis.json). The appendix counter explanation and additional hardware and shared-DRNG observations were critically checked with GPT-6 Astra assistance before incorporation. The initial mismatch-only analysis is superseded by R3's exact numerical explanation. Historical generator provenance remains a question for the submitters.
+[ngcc.dev](https://ngcc.dev/) is Markku-Juhani O. Saarinen's independent personal
+initiative and states that it is unaffiliated with NICCS. It is cited here for
+prior work and as an additional publication venue, without implying an official
+competition decision or endorsement.
 
-The supplementary AI analysis was not accepted wholesale. Its general verifier was not
-executed, its claimed large testing campaigns were not imported, and its
-unsupported attack and generic-security claims are not part of this package's
-evidence. The earlier independent model reproduced all printed intermediate
-states under the accepted counter assignments. A comparison with the supplied DeepSeek-generated
-model also agreed on 60 selected canonical KATs and nine ordinary examples;
-that private cross-check is supplementary, not an added 24,582-test campaign.
-The packaged checker depends only on this package and the optional original
-submission, not on the supplied DeepSeek-generated files.
+On 26 September 2026, he published my R1, R2–R3 and two R4 observations as
+`hash-10-2` through `hash-10-5`, and credited my R5 extension in `hash-10-1`.
+His original allocation-failure credit remains intact. The compact
+[source record](data/saarinen_followup.json) gives the entries, issue
+acknowledgments, consulted dates and cited harness revision. It labels the
+severity and status values explicitly as metadata from his site. The original
+consultation record above is preserved.
 
-The six `drng.c` files supplied with FEILIAN were verified byte-identical.
-The file identities are recorded in [data/shared_drng.json](data/shared_drng.json). The generator's
-ICCS attribution and the README support coordination with the infrastructure
-provider. No organizer was contacted as part of this preparation.
+His page reports subsequent RTL simulations and reference-C partial-byte
+checks; optimized-C partial-bit coverage and the length-arithmetic finding
+remain based on source inspection. Those follow-up reports were not independently
+reproduced here. The cited harness revision is a source locator, not a claim
+that its code was audited or executed in this review.
 
-Version 1.0.0 was published in the [FEILIAN review repository](https://github.com/amcrypto-jp/feilian-cryptanalysis) on 25 September 2026. Version 1.0.1 is prepared locally as an attribution correction. No DOI, assigned report number or disclosure acknowledgment is claimed.
+## Code and recorded evidence
 
-## Code and execution evidence
+The Python model implements the stated operations separately from the original
+C. Its `c` profile was checked against all three scalar variants and selected
+KATs. The packaged conformance run built six unchanged C sources and compared
+all short-message KATs. [evidence/README.md](evidence/README.md) identifies
+the completed runs and [REPRODUCING.md](REPRODUCING.md) gives their commands.
 
-The Python model was written separately from the supplied C implementation,
-using the stated operations and parameter conventions. Its `c` profile was
-checked against all three scalar variants and selected published KATs.
-Independent implementation in this sentence describes separate code, not
-independence from all prior literature or independent human peer review.
+Appendix B values are transcriptions of the identified specification, checked
+against its printed digests and intermediate states. Binary ranks and Sage
+polynomial/constant calculations are exact; the inverse checks use seed
+20260924. Component certificates and 1,029 column / 261 half-round reference-C
+comparisons have their own record. These totals retain their original execution
+identities; the 27 September editorial revision does not add new algorithm runs.
 
-The packaged driver was rerun against hash-verified, unchanged originals. It
-compiled all six C hash sources with GCC on Linux x86-64 and AVX2 and compared
-all short KATs. The Python model uses a selected 20 lengths per variant.
-The original run and the packaged rerun agreed. Machine-readable environment
-details are in [evidence/c_conformance.json](evidence/c_conformance.json).
+The six submitted DRNG files are byte-identical, as recorded in
+[data/shared_drng.json](data/shared_drng.json). Their portability and
+error-propagation findings are static; the conformance driver hashes fixed
+KAT messages without invoking that generator.
 
-The quick runner's C-profile digests originated in ordinary C executions.
-Alternate Chapter 2 digests are model results under explicit interpretation
-choices. Appendix digest and state values are factual transcriptions, rechecked against
-a fresh extraction of the pinned PDF on the packaged full run. The checker
-verifies both counter conventions on only the six ordinary printed examples
-and requires the expected assignment, all 45 round states and nine initial
-states. Nine recovered domain values provide an additional consistency check. Sage's interval and integer checks
-derive constants independently of those digest comparisons.
+## Scope and release status
 
-The 10,000 inverse samples use deterministic seed 20260924. Sampling supports
-implementation validation; the algebraic inverse provides the mathematical
-bijection argument. Binary rank and polynomial gcd checks establish linear
-properties only, not a full-compression security bound.
+In my included review executions, no RTL simulation, fault injection,
+extreme-length execution, noncanonical bit-input demonstration, keyed-mode
+experiment or full-round attack search was performed. Larger KAT sets and the million-iteration loop were not run.
+The scientific findings retain the limitations stated in the report.
 
-## Limits and preparation status
-
-RTL and error-path conclusions are static. No HDL simulator or physical device
-was used. No fault injection, extreme-length execution, noncanonical bit-input
-demonstration, full-round attack construction, exhaustive differential search
-or keyed-mode execution was performed. Larger KAT sets and the million-iteration
-loop were not rerun. See [REPRODUCING.md](REPRODUCING.md) for exact coverage.
-
-OpenAI Codex (GPT-6 Astra) assisted with analysis, code, documentation, validation and critical assessment of the material generated by deepseek-v4.1-flash. [AI_DISCLOSURE.md](AI_DISCLOSURE.md) records the two models' roles. Their use does not attest to independent human peer review. Mounir IDRASSI is responsible for the final report and conclusions.
-
-The technical additions were incorporated before v1.0.0 was published. Version 1.0.1 corrects the attribution after the author's clarification; it does not change the findings, verification code or recorded results. [CHANGES.md](CHANGES.md) records the correction and the earlier preparation history. The original v1.0.0 release remains a historical snapshot.
-
-The v1.0.1 publication drafts are local files. No repository update, release upload, issue submission, message or website deployment was performed while preparing this correction.
+Version 1.0.2 is prepared locally for release. Earlier published versions
+remain unchanged. Historical drafting material and unsent correspondence are
+preserved locally outside this package. No publication, upload, push,
+submission or external contact was performed during this preparation.

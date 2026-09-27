@@ -79,7 +79,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small\sffamily FEILIAN technical assessment}
-\fancyhead[R]{\small\sffamily Version 1.0.1}
+\fancyhead[R]{\small\sffamily Version 1.0.2}
 \fancyfoot[L]{\footnotesize\sffamily Mounir IDRASSI}
 \fancyfoot[R]{\footnotesize\sffamily\thepage}
 \setlength{\headheight}{15pt}
@@ -117,10 +117,10 @@ implementations}
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{Cryptographic review · Version 1.0.1}
+\subtitle{Cryptographic review · Version 1.0.2}
 \author{Mounir IDRASSI
 (\href{mailto:mounir@amcrypto.jp}{\nolinkurl{mounir@amcrypto.jp}})}
-\date{26 September 2026}
+\date{27 September 2026}
 
 \begin{document}
 \maketitle
@@ -143,30 +143,27 @@ or application guarantees. No full-round cryptanalytic break of the
 correctly encoded software hash is established. A corrected, unambiguous
 submission and renewed independent review are recommended.
 
-\textbf{Prior work and preparation.} Markku-Juhani O. Saarinen's
+\textbf{Prior work.} I consulted Markku-Juhani O. Saarinen's
 \href{https://ngcc.dev/reports/hash-10.html}{FEILIAN report of 23
-September 2026}, credited there with AI assistance, was consulted before
-this review. It reports silent allocation failure in the reference C
-implementations. R5 extends that source-level observation to the
-optimized implementations; it is not presented as an independently
-discovered original finding. R1--R4 and R6--R8 describe additional
-observations relative to that report as consulted on 24 September; no
-exhaustive novelty claim is made. Supplementary AI-generated analysis
-contributed the Appendix B counter explanation and additional hardware
-and shared-DRNG observations, which were critically checked before
-incorporation. Its broader experimental claims are not included in this
-report's verified coverage. The \href{PROVENANCE.md}{provenance record}
-identifies the reviewed files and the limits of verification.
+September 2026} on his independent personal website ngcc.dev before this
+review. It reports silent allocation failure in the reference C
+implementations. R5 extends that source-level observation to optimized
+implementations and credits the earlier finding. R1--R4 and R6--R8
+describe additional observations relative to that report as consulted on
+24 September; no exhaustive novelty claim is made. The
+\href{PROVENANCE.md}{provenance record} identifies the reviewed files,
+subsequent archive verification and limits of the recorded computations.
 
-\textbf{AI-use disclosure.} OpenAI Codex (GPT-6 Astra) assisted with
-source and specification analysis, mathematical checks, verification
-code and publication preparation. deepseek-v4.1-flash generated
-supplementary analysis and verification material supplied by the author;
-selected observations were critically checked before incorporation. Both
-are AI language models, and their use does not establish independent
-human peer review. Executed checks and static conclusions are reported
-separately. Mounir IDRASSI is responsible for the final report and its
-conclusions. See \url{AI_DISCLOSURE.md}.
+\textbf{AI assistance.} I used OpenAI Codex, GPT-6 Astra and Moonshot
+kimi-k3 as aids for selected parts of the analysis, code development and
+manuscript preparation, alongside my own research. Supplementary
+material from deepseek-v4.1-flash contributed checked observations about
+the appendix counters, hardware interfaces and shared test generator. I
+am responsible for the report's arguments, results and final text. See
+\url{AI_DISCLOSURE.md}.
+
+The original text of this report is licensed under CC BY 4.0. See
+\url{LICENSING.md} for software terms and third-party exceptions.
 
 \clearpage
 
@@ -196,9 +193,12 @@ The principal source is
 Page references below are the \textbf{printed page numbers}; the PDF
 viewer's page number is one greater. Its SHA-256 is
 \nolinkurl{8e3a9a109f3188ab57cbd0156c243f80a6453051cf98006dfef11d66bdeb5fa8}.
-The \href{data/input_manifest.json}{input manifest} fingerprints all 74
-original files. The archive digest on the public report was not checked
-against an original ZIP, which was not present here.
+After the initial review, the
+\href{https://www.niccs.org.cn/niccs/Proposal/Cryptographic\%20Hash\%20Algorithms/Round\%201\%20candidates/FEILIAN.zip}{official
+Round 1 archive} was retrieved on 26 September 2026; all 74 original
+files match the review's existing \href{data/input_manifest.json}{input
+manifest}. The archive checksum and comparison date are recorded in
+\url{data/source_archive.json}.
 
 \Needspace{7\baselineskip}
 
@@ -696,9 +696,15 @@ The critical composition questions are:
   reordering. Security analysis must include those correlated inputs;
   analyzing message-free permutations expressly leaves out that freedom.
 \item
-  Constants repeat within each phase and the first and fifth phase have
-  the same constant pattern. The phases are not independent random
-  permutations.
+  Constants repeat within each phase and the first and fifth phase
+  implement the same function for fixed message and tweak, as §4.6.2
+  itself acknowledges. With right-to-left composition, the
+  pre-feedforward permutation is \(E=F\circ G\circ F\), where
+  \(F=P_0=P_4\) and \(G=P_3\circ P_2\circ P_1\). Each phase has four
+  rounds and eight SubColumn/ShiftRow layers, so the middle three phases
+  contain twelve rounds and twenty-four layers. This is an exact
+  structural description, not an attack-cost reduction; the phases
+  cannot simply be assumed independent random permutations.
 \item
   Column-wise SubColumn and row shifts retain a structural relationship
   with cyclic column permutations. Rotating the constants between phases
@@ -753,8 +759,35 @@ before feedforward is a permutation for fixed message and tweak. There
 is no rank defect in either Sigma map. The probability-one component
 differentials acknowledged by the specification remain relevant to
 security analysis, but their existence alone does not establish a
-full-hash weakness. No independent exhaustive differential search or
-full-round attack construction was performed here.
+full-hash weakness. No exhaustive enumeration of the 64-bit component's
+derivative table or full-round attack construction was performed here.
+
+The two displayed probability-one examples on printed p.~22 are
+duplicates of the same valid relation: \((0,M,0,M)\to(M,0,M,0)\), with
+\(M=2^{63}\). PDF extraction and rendered-page inspection confirm the
+duplication; the \href{evidence/specification_examples.json}{document
+record} identifies both printed examples. More generally, for
+\(x,y\in\{0,M\}\), the component equations give
+\((x,y,x,x\oplus y)\to(x\oplus y,0,y,0)\). This follows from XOR by the
+MSB being addition by the MSB modulo \(2^{64}\), with the relevant
+differences cancelling before each Sigma contribution. It is a scoped
+component identity, not a full-round bound or a one-layer
+security-margin reduction. Arbitrary edits to intermediate states do not
+establish a consistent repeated-message computation, and chosen chaining
+states do not establish reachability from the fixed IV.
+
+The \href{SUBCOLUMN_STRUCTURES.md}{mathematical appendix} strengthens
+this identity to a complete classification: these four masks are all
+constant whole-output XOR derivatives of SubColumn, even when arbitrary
+256-bit input differences are allowed. A universal two-/three-input
+modular-addition lemma, Sigma bijectivity and independent component
+coordinates give the necessity proof. The four-column product has
+dimension eight. No nonzero member of that family has a constant
+whole-output derivative through SubColumn, ShiftRow and a second
+SubColumn layer; bijectivity of the first half-round is essential to
+that argument. This does not classify every input difference of the
+complete round, projected-output properties or later compositions, and
+supplies no full-hash security bound.
 
 The generic-security discussion should distinguish the variants. Only
 the 1,024-bit output version has a chaining state equal in width to the
@@ -879,6 +912,16 @@ silently be allowed to wrap while retaining the claim that every squeeze
 call is distinct. No MAC/KDF/XOF implementation or corresponding KATs
 were present.
 
+Specifically, §6.3 sets the absorption flag to zero, including the last
+absorption block, and defines every counter-indexed squeeze call from
+the same root. It is parallel counter-based expansion rather than
+sequential sponge squeezing. That structure is explicit in the
+specification and is not inherently a weakness. Distinct version
+encodings and near-half average Hamming distances do not establish
+independent output blocks or supply the missing mode proof. The
+squeezing family, variant-dependent output selection, counter range and
+absorption rule must be analyzed together.
+
 Keyed applications create additional implementation requirements. In
 1SC, 2SC, and 4SC, the digest signal is continuously derived from the
 current chaining register, and the top-level MMIO read path is not
@@ -980,6 +1023,20 @@ commands, dependencies and coverage. The latter path verifies all 74
 original file hashes before compilation. Original submission files are
 not redistributed.
 
+Version 1.0.2 includes the recorded document check of both §4.5.2
+examples. It confirms the two identical printed relations. The earlier
+KAT, appendix and arithmetic records retain their original counts and
+execution identities.
+
+The mathematical appendix has a separate
+\href{code/check_subcolumn_structures.py}{checker} and
+\href{evidence/subcolumn_structures.json}{result record}. Its exact rank
+checks, small-width addition enumeration and finite nonconstancy
+certificates support implementation validation. Ordinary comparisons
+agree with the original scalar C on 1,029 column and 261 half-round
+evaluations. The universal 64-bit classification relies on the written
+mathematical proof, not on sampling or a machine-checked proof claim.
+
 The ordinary C tests passed. Compiler warnings concerned a validated
 positive output-length conversion and unused SIMD masks; those warnings
 were not treated as security findings. The long-message KAT sets
@@ -1040,6 +1097,29 @@ review has broken the full-round, correctly encoded software hash.
 
 \Needspace{5\baselineskip}
 
+\section{Secondary publication
+record}\label{secondary-publication-record}
+
+Markku-Juhani O. Saarinen also published the submitted findings on
+\href{https://ngcc.dev/reports/hash-10.html}{ngcc.dev} on 26 September
+2026. His \href{https://ngcc.dev/}{independent personal site} states
+that it is unaffiliated with NICCS. I cite it for prior work and as
+another publication venue for my findings. Its identifiers and editorial
+labels belong to that site; they are not official competition
+assessments.
+
+The site's entries \texttt{hash-10-2} through \texttt{hash-10-5}
+correspond to R1--R4, and \texttt{hash-10-1} credits my R5 scope
+extension to Saarinen's earlier finding. The
+\href{FINDINGS.md\#secondary-publication-record}{finding index} and
+\href{data/saarinen_followup.json}{source record} give the mapping and
+dated links. His page also reports RTL simulations and reference-C
+partial-byte checks. Those are attributed follow-up reports, not
+experiments rerun for this review. The assessments here rest on the
+analysis and evidence described above.
+
+\Needspace{5\baselineskip}
+
 \section{References}\label{references}
 
 \begin{enumerate}
@@ -1051,9 +1131,11 @@ review has broken the full-round, correctly encoded software hash.
   \href{data/input_manifest.json}{the input manifest}. Printed page
   numbering is used throughout.
 \item
-  Markku-Juhani O. Saarinen. \emph{FEILIAN (hash-10)}, 23 September
-  2026. \href{https://ngcc.dev/reports/hash-10.html}{Public report},
-  consulted 24 September 2026.
+  Markku-Juhani O. Saarinen. \emph{FEILIAN (hash-10)}.
+  \href{https://ngcc.dev/reports/hash-10.html}{Personal website report},
+  ngcc.dev. Original entry dated 23 September 2026, consulted 24
+  September; later entries dated 26 September, consulted 27 September
+  2026.
 \item
   Eli Biham and Orr Dunkelman. \emph{A Framework for Iterative Hash
   Functions --- HAIFA}. IACR ePrint 2007/278.
@@ -1092,8 +1174,5 @@ review has broken the full-round, correctly encoded software hash.
   \href{https://www.cs.ucdavis.edu/~rogaway/classes/227/spring05/book/main.pdf\#page=167}{Author-hosted
   notes}.
 \end{enumerate}
-
-The original text of this report is licensed under CC BY 4.0. See
-\url{LICENSING.md} for software terms and third-party exceptions.
 
 \end{document}

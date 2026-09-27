@@ -11,14 +11,13 @@ The MIT license in [LICENSE](LICENSE) applies to `code/`, `run.py`,
 not the FEILIAN implementations being examined. The model is review software,
 not a supported cryptographic library.
 
-## Report, records and drafts
+## Report and records
 
 Creative Commons Attribution 4.0 International applies to the original report
-in all its supplied formats, the original documentation, publication drafts,
-metadata, and original analysis/result records in `data/` and `evidence/`.
+in all its supplied formats, the original documentation, metadata, and original analysis/result records in `data/` and `evidence/`.
 The full license is [LICENSES/CC-BY-4.0.txt](LICENSES/CC-BY-4.0.txt).
 Suggested attribution: “Mounir IDRASSI, FEILIAN: technical assessment of the
-submitted specification and implementations, version 1.0.1, 26 September 2026.”
+submitted specification and implementations, version 1.0.2, 27 September 2026.”
 
 ## Third-party material
 

@@ -1,0 +1,8 @@
+Exact Sigma ranks: 64, 64; rotation and bit identities agree.
+Two-/three-input addition: all masks classified at widths 2, 3, 4, including the width-2 exception.
+T1: 1044 comparisons; inverse: 261 comparisons.
+T2/C1: 12 MSB and 7 specified non-MSB candidates excluded by stored counterexamples.
+T3/T4: 1024 full difference-map comparisons each.
+T5: all 255 nonzero family members excluded at the second-layer boundary by stored counterexamples.
+Reference C: 1029 column and 261 half-round agreements.
+COMPONENT CHECKS PASSED. Universal claims rely on the accompanying proof.

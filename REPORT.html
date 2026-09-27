@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc 3.11" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Mounir IDRASSI (mounir@amcrypto.jp)" />
-  <meta name="dcterms.date" content="2026-09-26" />
+  <meta name="dcterms.date" content="2026-09-27" />
   <title>FEILIAN: technical assessment of the submitted specification and implementations</title>
   <style>
 
@@ -73,9 +73,9 @@ tr, .math.display { break-inside: avoid; }
 <header id="title-block-header">
 <h1 class="title">FEILIAN: technical assessment of the submitted
 specification and implementations</h1>
-<p class="subtitle">Cryptographic review · Version 1.0.1</p>
+<p class="subtitle">Cryptographic review · Version 1.0.2</p>
 <p class="author">Mounir IDRASSI (<a href="mailto:mounir@amcrypto.jp">mounir@amcrypto.jp</a>)</p>
-<p class="date">26 September 2026</p>
+<p class="date">27 September 2026</p>
 </header>
 <p><strong>Abstract.</strong> This review examines the FEILIAN hash
 submission dated 30 June 2026, including its specification, six C
@@ -94,29 +94,25 @@ security discussion does not establish the claimed composition, margin
 or application guarantees. No full-round cryptanalytic break of the
 correctly encoded software hash is established. A corrected, unambiguous
 submission and renewed independent review are recommended.</p>
-<p><strong>Prior work and preparation.</strong> Markku-Juhani O.
-Saarinen’s <a href="https://ngcc.dev/reports/hash-10.html">FEILIAN
-report of 23 September 2026</a>, credited there with AI assistance, was
-consulted before this review. It reports silent allocation failure in
-the reference C implementations. R5 extends that source-level
-observation to the optimized implementations; it is not presented as an
-independently discovered original finding. R1–R4 and R6–R8 describe
-additional observations relative to that report as consulted on 24
-September; no exhaustive novelty claim is made. Supplementary
-AI-generated analysis contributed the Appendix B counter explanation and
-additional hardware and shared-DRNG observations, which were critically
-checked before incorporation. Its broader experimental claims are not
-included in this report’s verified coverage. The <a href="PROVENANCE.md">provenance record</a> identifies the reviewed files
-and the limits of verification.</p>
-<p><strong>AI-use disclosure.</strong> OpenAI Codex (GPT-6 Astra)
-assisted with source and specification analysis, mathematical checks,
-verification code and publication preparation. deepseek-v4.1-flash
-generated supplementary analysis and verification material supplied by
-the author; selected observations were critically checked before
-incorporation. Both are AI language models, and their use does not
-establish independent human peer review. Executed checks and static
-conclusions are reported separately. Mounir IDRASSI is responsible for
-the final report and its conclusions. See <a href="AI_DISCLOSURE.md">AI_DISCLOSURE.md</a>.</p>
+<p><strong>Prior work.</strong> I consulted Markku-Juhani O. Saarinen’s
+<a href="https://ngcc.dev/reports/hash-10.html">FEILIAN report of 23
+September 2026</a> on his independent personal website ngcc.dev before
+this review. It reports silent allocation failure in the reference C
+implementations. R5 extends that source-level observation to optimized
+implementations and credits the earlier finding. R1–R4 and R6–R8
+describe additional observations relative to that report as consulted on
+24 September; no exhaustive novelty claim is made. The <a href="PROVENANCE.md">provenance record</a> identifies the reviewed
+files, subsequent archive verification and limits of the recorded
+computations.</p>
+<p><strong>AI assistance.</strong> I used OpenAI Codex, GPT-6 Astra and
+Moonshot kimi-k3 as aids for selected parts of the analysis, code
+development and manuscript preparation, alongside my own research.
+Supplementary material from deepseek-v4.1-flash contributed checked
+observations about the appendix counters, hardware interfaces and shared
+test generator. I am responsible for the report’s arguments, results and
+final text. See <a href="AI_DISCLOSURE.md">AI_DISCLOSURE.md</a>.</p>
+<p>The original text of this report is licensed under CC BY 4.0. See <a href="LICENSING.md">LICENSING.md</a> for software terms and third-party
+exceptions.</p>
 <h1 id="assessment-and-scope">Assessment and scope</h1>
 <p><strong>Recommendation: withhold a positive security assessment and
 integration approval for this submission.</strong> There is a
@@ -140,10 +136,11 @@ counter path.</p>
 numbers</strong>; the PDF viewer’s page number is one greater. Its
 SHA-256 is
 <code>8e3a9a109f3188ab57cbd0156c243f80a6453051cf98006dfef11d66bdeb5fa8</code>.
-The <a href="data/input_manifest.json">input manifest</a> fingerprints
-all 74 original files. The archive digest on the public report was not
-checked against an original ZIP, which was not present here.</p>
-<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
+After the initial review, the <a href="https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/FEILIAN.zip">official
+Round 1 archive</a> was retrieved on 26 September 2026; all 74 original
+files match the review’s existing <a href="data/input_manifest.json">input manifest</a>. The archive checksum
+and comparison date are recorded in <a href="data/source_archive.json">data/source_archive.json</a>.</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
 <table>
 <colgroup>
 <col style="width: 7%" />
@@ -286,7 +283,7 @@ deployment.</p>
 algorithm definitions</h1>
 <p>There are independent discrepancies, so correcting one typo is
 insufficient.</p>
-<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
 <table>
 <colgroup>
 <col style="width: 22%" />
@@ -362,7 +359,7 @@ code for the empty message, <code>abc</code>, and 129 repetitions of
 <code>a</code>, for every digest size. This is a conformance comparison
 on ordinary messages. For example, the first 16 digest bytes for
 FEILIAN-1024(<code>abc</code>) are:</p>
-<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
 <table>
 <colgroup>
 <col style="width: 43%" />
@@ -434,7 +431,7 @@ cumulative true message length.</p>
 counter explanation. Keeping the C IV, round operations, version
 selection, high-word-first counter and digest serialization, the
 following counts reproduce every printed example:</p>
-<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
 <table>
 <colgroup>
 <col style="width: 22%" />
@@ -651,8 +648,18 @@ reordering. Security analysis must include those correlated inputs;
 analyzing message-free permutations expressly leaves out that
 freedom.</li>
 <li>Constants repeat within each phase and the first and fifth phase
-have the same constant pattern. The phases are not independent random
-permutations.</li>
+implement the same function for fixed message and tweak, as §4.6.2
+itself acknowledges. With right-to-left composition, the pre-feedforward
+permutation is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mi>F</mi><mo>∘</mo><mi>G</mi><mo>∘</mo><mi>F</mi></mrow><annotation encoding="application/x-tex">E=F\circ G\circ F</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo>=</mo><msub><mi>P</mi><mn>0</mn></msub><mo>=</mo><msub><mi>P</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">F=P_0=P_4</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><msub><mi>P</mi><mn>3</mn></msub><mo>∘</mo><msub><mi>P</mi><mn>2</mn></msub><mo>∘</mo><msub><mi>P</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">G=P_3\circ P_2\circ P_1</annotation></semantics></math>.
+Each phase has four rounds and eight SubColumn/ShiftRow layers, so the
+middle three phases contain twelve rounds and twenty-four layers. This
+is an exact structural description, not an attack-cost reduction; the
+phases cannot simply be assumed independent random permutations.</li>
 <li>Column-wise SubColumn and row shifts retain a structural
 relationship with cyclic column permutations. Rotating the constants
 between phases makes joint analysis of the message and tweak essential.
@@ -704,8 +711,39 @@ before feedforward is a permutation for fixed message and tweak. There
 is no rank defect in either Sigma map. The probability-one component
 differentials acknowledged by the specification remain relevant to
 security analysis, but their existence alone does not establish a
-full-hash weakness. No independent exhaustive differential search or
-full-round attack construction was performed here.</p>
+full-hash weakness. No exhaustive enumeration of the 64-bit component’s
+derivative table or full-round attack construction was performed
+here.</p>
+<p>The two displayed probability-one examples on printed p. 22 are
+duplicates of the same valid relation:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mi>M</mi><mo>,</mo><mn>0</mn><mo>,</mo><mi>M</mi><mo stretchy="false" form="postfix">)</mo><mo>→</mo><mo stretchy="false" form="prefix">(</mo><mi>M</mi><mo>,</mo><mn>0</mn><mo>,</mo><mi>M</mi><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(0,M,0,M)\to(M,0,M,0)</annotation></semantics></math>,
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>=</mo><msup><mn>2</mn><mn>63</mn></msup></mrow><annotation encoding="application/x-tex">M=2^{63}</annotation></semantics></math>.
+PDF extraction and rendered-page inspection confirm the duplication; the
+<a href="evidence/specification_examples.json">document record</a>
+identifies both printed examples. More generally, for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>,</mo><mi>y</mi><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mi>M</mi><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">x,y\in\{0,M\}</annotation></semantics></math>,
+the component equations give
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>,</mo><mi>x</mi><mo>,</mo><mi>x</mi><mo>⊕</mo><mi>y</mi><mo stretchy="false" form="postfix">)</mo><mo>→</mo><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>⊕</mo><mi>y</mi><mo>,</mo><mn>0</mn><mo>,</mo><mi>y</mi><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(x,y,x,x\oplus y)\to(x\oplus y,0,y,0)</annotation></semantics></math>.
+This follows from XOR by the MSB being addition by the MSB modulo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>2</mn><mn>64</mn></msup><annotation encoding="application/x-tex">2^{64}</annotation></semantics></math>,
+with the relevant differences cancelling before each Sigma contribution.
+It is a scoped component identity, not a full-round bound or a one-layer
+security-margin reduction. Arbitrary edits to intermediate states do not
+establish a consistent repeated-message computation, and chosen chaining
+states do not establish reachability from the fixed IV.</p>
+<p>The <a href="SUBCOLUMN_STRUCTURES.md">mathematical appendix</a>
+strengthens this identity to a complete classification: these four masks
+are all constant whole-output XOR derivatives of SubColumn, even when
+arbitrary 256-bit input differences are allowed. A universal
+two-/three-input modular-addition lemma, Sigma bijectivity and
+independent component coordinates give the necessity proof. The
+four-column product has dimension eight. No nonzero member of that
+family has a constant whole-output derivative through SubColumn,
+ShiftRow and a second SubColumn layer; bijectivity of the first
+half-round is essential to that argument. This does not classify every
+input difference of the complete round, projected-output properties or
+later compositions, and supplies no full-hash security bound.</p>
 <p>The generic-security discussion should distinguish the variants. Only
 the 1,024-bit output version has a chaining state equal in width to the
 digest. The 512- and 768-bit versions retain a 1,024-bit state
@@ -720,7 +758,7 @@ inheriting all HAIFA protections is too broad.</p>
 behavior, its collision and preimage exponents are the usual ones for
 the three output lengths; their achievement by FEILIAN is what remains
 unestablished. The generic quantum query scales are different:</p>
-<div class="table-scroll" aria-label="Comparison table" role="region" tabindex="0">
+<div class="table-scroll" role="region" tabindex="0" aria-label="Comparison table">
 <table style="width:100%;">
 <colgroup>
 <col style="width: 12%" />
@@ -831,6 +869,15 @@ and behavior on counter exhaustion. A finite 128-bit counter cannot
 silently be allowed to wrap while retaining the claim that every squeeze
 call is distinct. No MAC/KDF/XOF implementation or corresponding KATs
 were present.</p>
+<p>Specifically, §6.3 sets the absorption flag to zero, including the
+last absorption block, and defines every counter-indexed squeeze call
+from the same root. It is parallel counter-based expansion rather than
+sequential sponge squeezing. That structure is explicit in the
+specification and is not inherently a weakness. Distinct version
+encodings and near-half average Hamming distances do not establish
+independent output blocks or supply the missing mode proof. The
+squeezing family, variant-dependent output selection, counter range and
+absorption rule must be analyzed together.</p>
 <p>Keyed applications create additional implementation requirements. In
 1SC, 2SC, and 4SC, the digest signal is continuously derived from the
 current chaining register, and the top-level MMIO read path is not
@@ -909,6 +956,17 @@ examples and component arithmetic, plus an optional check against the
 supplied C sources and published short-message KATs. See <a href="REPRODUCING.md">REPRODUCING.md</a> for commands, dependencies and
 coverage. The latter path verifies all 74 original file hashes before
 compilation. Original submission files are not redistributed.</p>
+<p>Version 1.0.2 includes the recorded document check of both §4.5.2
+examples. It confirms the two identical printed relations. The earlier
+KAT, appendix and arithmetic records retain their original counts and
+execution identities.</p>
+<p>The mathematical appendix has a separate <a href="code/check_subcolumn_structures.py">checker</a> and <a href="evidence/subcolumn_structures.json">result record</a>. Its exact
+rank checks, small-width addition enumeration and finite nonconstancy
+certificates support implementation validation. Ordinary comparisons
+agree with the original scalar C on 1,029 column and 261 half-round
+evaluations. The universal 64-bit classification relies on the written
+mathematical proof, not on sampling or a machine-checked proof
+claim.</p>
 <p>The ordinary C tests passed. Compiler warnings concerned a validated
 positive output-length conversion and unused SIMD masks; those warnings
 were not treated as security findings. The long-message KAT sets
@@ -954,15 +1012,30 @@ definitions and unsupported security margins are the strongest reasons
 to withhold confidence in the submission as a whole. They justify a hold
 and a corrected review target; they do not justify claiming that this
 review has broken the full-round, correctly encoded software hash.</p>
+<h1 id="secondary-publication-record">Secondary publication record</h1>
+<p>Markku-Juhani O. Saarinen also published the submitted findings on <a href="https://ngcc.dev/reports/hash-10.html">ngcc.dev</a> on 26
+September 2026. His <a href="https://ngcc.dev/">independent personal
+site</a> states that it is unaffiliated with NICCS. I cite it for prior
+work and as another publication venue for my findings. Its identifiers
+and editorial labels belong to that site; they are not official
+competition assessments.</p>
+<p>The site’s entries <code>hash-10-2</code> through
+<code>hash-10-5</code> correspond to R1–R4, and <code>hash-10-1</code>
+credits my R5 scope extension to Saarinen’s earlier finding. The <a href="FINDINGS.md#secondary-publication-record">finding index</a> and <a href="data/saarinen_followup.json">source record</a> give the mapping
+and dated links. His page also reports RTL simulations and reference-C
+partial-byte checks. Those are attributed follow-up reports, not
+experiments rerun for this review. The assessments here rest on the
+analysis and evidence described above.</p>
 <h1 id="references">References</h1>
 <ol type="1">
 <li><p>Lei Wang, Ling Song, Yaobin Shen, Kaixuan Wang, Zicheng Shi and
 Xin Yi. <em>FEILIAN algorithm specification</em>, 30 June 2026. The
 supplied 68-page PDF is identified by its digest above and in <a href="data/input_manifest.json">the input manifest</a>. Printed page
 numbering is used throughout.</p></li>
-<li><p>Markku-Juhani O. Saarinen. <em>FEILIAN (hash-10)</em>, 23
-September 2026. <a href="https://ngcc.dev/reports/hash-10.html">Public
-report</a>, consulted 24 September 2026.</p></li>
+<li><p>Markku-Juhani O. Saarinen. <em>FEILIAN (hash-10)</em>. <a href="https://ngcc.dev/reports/hash-10.html">Personal website
+report</a>, ngcc.dev. Original entry dated 23 September 2026, consulted
+24 September; later entries dated 26 September, consulted 27 September
+2026.</p></li>
 <li><p>Eli Biham and Orr Dunkelman. <em>A Framework for Iterative Hash
 Functions — HAIFA</em>. IACR ePrint 2007/278. <a href="https://eprint.iacr.org/2007/278.pdf">Paper</a>.</p></li>
 <li><p>John Black, Phillip Rogaway and Thomas Shrimpton. <em>Black-Box
@@ -986,7 +1059,5 @@ Languages — C</em>, 12 April 2011. §§6.5.7 and 7.24.1. <a href="https://www.
 Cryptography</em>, course notes, 2005. Proposition 7.3. <a href="https://www.cs.ucdavis.edu/~rogaway/classes/227/spring05/book/main.pdf#page=167">Author-hosted
 notes</a>.</p></li>
 </ol>
-<p>The original text of this report is licensed under CC BY 4.0. See <a href="LICENSING.md">LICENSING.md</a> for software terms and third-party
-exceptions.</p>
 </body>
 </html>

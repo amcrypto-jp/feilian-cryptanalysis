@@ -1,7 +1,9 @@
 # Recorded validation
 
-These files record executions performed on 24 September 2026 with the packaged
-review code. The original submission was hash-verified before C compilation.
+The conformance and arithmetic files record executions on 24 September 2026.
+The document and component checks below were added on 26 September 2026. The
+original submission was hash-verified before C compilation. The 27 September
+editorial update preserves these results and does not add algorithm executions.
 
 | Record | Contents |
 |---|---|
@@ -37,9 +39,20 @@ source index under `data/`. Allocation failures, noncanonical inputs, extreme
 lengths, long KAT collections, keyed modes and full-round attack searches were
 not executed. See [REPRODUCING.md](../REPRODUCING.md).
 
-The PDF was inspected for page bounds and selected pages were visually checked.
-The report HTML and website article/index were exercised in Chromium at widths
-320, 390, 768 and 1440 pixels, with no document-width overflow or page script
-errors in those checks. The report HTML made no external resource requests.
-The website uses its existing CDN dependencies. Document rendering checks are
-separate from algorithm validation.
+Saarinen's personal site separately reports follow-up checks; see the
+[secondary-source record](../data/saarinen_followup.json). Those reports were
+not independently reproduced here and do not change the execution records above.
+
+Document rebuilding is separate from the scientific runs recorded here.
+It does not change their coverage or execution dates.
+
+## Specification example check
+
+[specification_examples.json](specification_examples.json) and
+[its log](specification_examples.log) record extraction of both identical
+§4.5.2 examples from the pinned PDF. The command and original-source requirement
+are in [REPRODUCING.md](../REPRODUCING.md).
+
+## Component classification checks
+
+[subcolumn_structures.json](subcolumn_structures.json), [its log](subcolumn_structures.log) and [C build log](subcolumn_c_build.log) record the checks accompanying [SUBCOLUMN_STRUCTURES.md](../SUBCOLUMN_STRUCTURES.md). These include exact ranks, small addition-mask classifications, finite component nonconstancy certificates and 1,029 column / 261 half-round agreements with the original scalar C. The complete 64-bit LD classification is an analytical theorem, not a sampling inference or a machine-checked proof.
